@@ -25,6 +25,21 @@
     <dependencies>
         <!-- Compile/runtime dependencies -->
         <dependency>
+        	<groupId>org.springframework</groupId>
+        	<artifactId>spring-context</artifactId>
+        	<version>4.0.2.RELEASE</version>
+  		</dependency>
+  		<dependency>
+        	<groupId>org.springframework</groupId>
+        	<artifactId>spring-web</artifactId>
+        	<version>4.0.2.RELEASE</version>
+  		</dependency>
+  		<dependency>
+        	<groupId>org.springframework</groupId>
+        	<artifactId>spring-webmvc</artifactId>
+        	<version>4.0.2.RELEASE</version>
+  		</dependency>
+        <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-api-1.0-sdk</artifactId>
             <version>${appengine.target.version}</version>
