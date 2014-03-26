@@ -449,6 +449,13 @@ warSrcDirIsOutput=true]]>
 			<scope>compile</scope>
 		</dependency>
 
+		<dependency>
+	      <groupId>com.google.http-client</groupId>
+	      <artifactId>google-http-client-appengine</artifactId>
+	      <version>1.17.0-rc</version>
+	    </dependency>
+            
+    
 		<!-- Templating -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>

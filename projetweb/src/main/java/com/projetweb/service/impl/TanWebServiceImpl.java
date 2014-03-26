@@ -6,19 +6,18 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpException;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
+import java.util.Map;
+
+import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpResponse;
+import com.google.api.client.http.UrlEncodedContent;
 import com.google.gson.Gson;
 import com.projetweb.bean.AddressTanResponse;
 import com.projetweb.bean.Adresse;
@@ -48,23 +47,21 @@ public class TanWebServiceImpl implements TanWebService{
 		
 		Gson gson = new Gson();
 		
-            
-        try {
-        	HttpClient client = new DefaultHttpClient();
-			HttpPost postRequest = new HttpPost(tanUrl + serviceAdresse);
+		try {  
+			UrlFetchTransport HTTP_TRANSPORT = new UrlFetchTransport();
+			HttpRequestFactory httpRequestFactory = HTTP_TRANSPORT.createRequestFactory();
+			Map<String, String> paramsMap = new HashMap<String, String>();
+			paramsMap.put("nom", adresse);
+			HttpRequest req;
 			
-			// Add your data
-	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-	        nameValuePairs.add(new BasicNameValuePair("nom", adresse));
-	        postRequest.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			req = httpRequestFactory.buildPostRequest(new GenericUrl(tanUrl + serviceAdresse), new UrlEncodedContent(paramsMap));
+			
+			req.setFollowRedirects(true);
+			HttpResponse response = req.execute();
+	            
 	        
-			HttpResponse response = client.execute(postRequest);
-	
-	        
-	        StatusLine statusLine = response.getStatusLine();
-			if(statusLine.getStatusCode() == 200) {
-				HttpEntity entity = response.getEntity();
-				InputStream content = entity.getContent();
+			if(response.getStatusCode() == 200) {
+				InputStream content = response.getContent();
 				//Read the server response and attempt to parse it as JSON
 				Reader reader = new InputStreamReader(content);
 				
@@ -77,17 +74,14 @@ public class TanWebServiceImpl implements TanWebService{
 				
 				adressesList.add(tmpAdresse);
 			} else {
-				System.out.println(statusLine.getStatusCode());
+				System.out.println(response.getStatusCode());
 				//TODO: Logs
 			}
-	        
-    	} catch (URISyntaxException e) {
-			e.printStackTrace();
-		} catch (HttpException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}  
+		
 		return adressesList;
 	}
 
