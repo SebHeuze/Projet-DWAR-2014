@@ -1,4 +1,4 @@
-package com.projet.helper;
+package com.projetweb.helper;
 
 import java.io.IOException;
 import java.io.InputStream;

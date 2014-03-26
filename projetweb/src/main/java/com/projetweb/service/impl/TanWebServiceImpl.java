@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.projet.helper.HttpRequestHelper.postHttpRequest;
+import static com.projetweb.helper.HttpRequestHelper.postHttpRequest;
 
 import java.util.Map;
 
@@ -46,13 +46,7 @@ public class TanWebServiceImpl implements TanWebService{
 		AddressTanResponse[] listeReponse = (AddressTanResponse[]) gson.fromJson(result, AddressTanResponse[].class);
 		AddressTanResponse reponseTan = listeReponse[0];
 		
-		Adresse tmpAdresse = new Adresse();
-		
-		tmpAdresse.setNom(reponseTan.getLieux().get(0).getNom());
-		
-		adressesList.add(tmpAdresse);
-		
-		return adressesList;
+		return reponseTan.getLieux();
 	}
 
 	/**
