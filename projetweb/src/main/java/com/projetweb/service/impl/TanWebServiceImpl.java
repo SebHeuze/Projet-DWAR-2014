@@ -1,24 +1,14 @@
 package com.projetweb.service.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.projet.helper.HttpRequestHelper.postHttpRequest;
 
 import java.util.Map;
 
-import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.client.http.UrlEncodedContent;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.Gson;
 import com.projetweb.bean.AddressTanResponse;
 import com.projetweb.bean.Adresse;
@@ -48,40 +38,19 @@ public class TanWebServiceImpl implements TanWebService{
 		
 		Gson gson = new Gson();
 		
-		try {  
-			NetHttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-			HttpRequestFactory httpRequestFactory = HTTP_TRANSPORT.createRequestFactory();
-			Map<String, String> paramsMap = new HashMap<String, String>();
-			paramsMap.put("nom", adresse);
-			HttpRequest req;
-			
-			req = httpRequestFactory.buildPostRequest(new GenericUrl(tanUrl + serviceAdresse), new UrlEncodedContent(paramsMap));
-			
-			req.setFollowRedirects(true);
-			HttpResponse response = req.execute();
-	            
-	        
-			if(response.getStatusCode() == 200) {
-				InputStream content = response.getContent();
-				//Read the server response and attempt to parse it as JSON
-				Reader reader = new InputStreamReader(content);
-				
-				AddressTanResponse[] listeReponse = (AddressTanResponse[]) gson.fromJson(reader, AddressTanResponse[].class);
-				AddressTanResponse reponseTan = listeReponse[0];
-				
-				Adresse tmpAdresse = new Adresse();
-				
-				tmpAdresse.setNom(reponseTan.getLieux().get(0).getNom());
-				
-				adressesList.add(tmpAdresse);
-			} else {
-				System.out.println(response.getStatusCode());
-				//TODO: Logs
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
+
+		Map<String, String> paramsMap = new HashMap<String, String>();
+		paramsMap.put("nom", adresse);
+		Reader result = postHttpRequest(tanUrl + serviceAdresse,paramsMap);
+		
+		AddressTanResponse[] listeReponse = (AddressTanResponse[]) gson.fromJson(result, AddressTanResponse[].class);
+		AddressTanResponse reponseTan = listeReponse[0];
+		
+		Adresse tmpAdresse = new Adresse();
+		
+		tmpAdresse.setNom(reponseTan.getLieux().get(0).getNom());
+		
+		adressesList.add(tmpAdresse);
 		
 		return adressesList;
 	}
