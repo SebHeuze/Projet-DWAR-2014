@@ -25,89 +25,6 @@
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>${gae.version}</version>
 			</plugin>
-			<!-- Until the patches at http://jira.codehaus.org/browse/MECLIPSE-402 
-				and http://jira.codehaus.org/browse/MECLIPSE-422 are not included in the 
-				release, we have to rely on this snapshot from Javanto. -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.8-20100130</version>
-				<configuration>
-					<buildOutputDirectory>target/${project.build.finalName}/WEB-INF/classes</buildOutputDirectory>
-					<fakeBuildOutputDirectory>true</fakeBuildOutputDirectory>
-					<useProjectReferences>false</useProjectReferences>
-					<projectnatures>
-						<projectnature>org.eclipse.jdt.core.javanature</projectnature>
-						<projectnature>com.google.gdt.eclipse.core.webAppNature</projectnature>
-						<projectnature>com.google.appengine.eclipse.core.gaeNature</projectnature>
-					</projectnatures>
-					<buildcommands>
-						<buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
-						<buildcommand>com.google.gdt.eclipse.core.webAppProjectValidator</buildcommand>
-						<buildcommand>com.google.appengine.eclipse.core.enhancerbuilder</buildcommand>
-						<buildcommand>com.google.appengine.eclipse.core.projectValidator</buildcommand>
-						<buildCommand>
-							<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
-							<arguments>
-								<LaunchConfigHandle>&lt;project&gt;/.externalToolBuilders/MavenBuilder.launch</LaunchConfigHandle>
-							</arguments>
-						</buildCommand>
-					</buildcommands>
-					<classpathContainers>
-						<classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
-						<classpathContainer>com.google.appengine.eclipse.core.GAE_CONTAINER</classpathContainer>
-					</classpathContainers>
-					<excludes>
-						<exclude>net.sf.jsr107cache:jsr107cache</exclude>
-						<exclude>com.google.appengine:jsr107cache</exclude>
-						<exclude>com.google.appengine:appengine-api-1.0-sdk</exclude>
-						<exclude>com.google.appengine:appengine-api-labs</exclude>
-						<exclude>com.google.appengine.orm:datanucleus-appengine</exclude>
-						<exclude>org.datanucleus:datanucleus-core</exclude>
-						<exclude>org.datanucleus:datanucleus-jpa</exclude>
-						<exclude>org.apache.geronimo.specs:geronimo-jpa_3.0_spec</exclude>
-						<exclude>org.apache.geronimo.specs:geronimo-jta_1.1_spec</exclude>
-						<exclude>javax.jdo:jdo2-api</exclude>
-					</excludes>
-					<additionalConfig>
-						<file>
-							<name>.externalToolBuilders/MavenBuilder.launch</name>
-							<content>
-<![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<launchConfiguration type="org.eclipse.ui.externaltools.ProgramBuilderLaunchConfigurationType">
-<stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="$${project}"/>
-<booleanAttribute key="org.eclipse.debug.ui.ATTR_LAUNCH_IN_BACKGROUND" value="false"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${maven.home}/bin/${maven.executable}"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS" value="full,incremental,auto,"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="war:exploded dependency:copy"/>
-<booleanAttribute key="org.eclipse.ui.externaltools.ATTR_TRIGGERS_CONFIGURED" value="true"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${basedir}"/>
-</launchConfiguration>]]>
-							</content>
-						</file>
-						<file>
-							<name>.settings/com.google.appengine.eclipse.core.prefs</name>
-							<content>
-<![CDATA[#
-eclipse.preferences.version=1
-filesCopiedToWebInfLib=jsr107cache-1.1.jar|appengine-api-labs-${gae.version}.jar|appengine-jsr107cache-${gae.version}.jar|appengine-api-1.0-sdk-${gae.version}.jar|datanucleus-jpa-${datanucleus.version}.jar|geronimo-jta_1.1_spec-1.1.1.jar|datanucleus-core-${datanucleus.version}.jar|geronimo-jpa_3.0_spec-1.1.1.jar|jdo2-api-${jdo.version}.jar|datanucleus-appengine-${datanucleus-appengine.version}.final.jar|google_sql.jar
-gaeHrdEnabled=true
-ormEnhancementInclusions=src/main/java/guestbook/*.java]]>
-							</content>
-						</file>
-						<file>
-							<name>.settings/com.google.gdt.eclipse.core.prefs</name>
-							<content>
-<![CDATA[#
-eclipse.preferences.version=1
-jarsExcludedFromWebInfLib=
-warSrcDir=target/${project.build.finalName}
-warSrcDirIsOutput=true]]>
-							</content>
-						</file>
-					</additionalConfig>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -363,27 +280,27 @@ warSrcDirIsOutput=true]]>
 			</snapshots>
 		</repository>
 		<repository>
-			<id>javanto-releases</id>
-			<url>https://raw.github.com/javanto/repository/releases</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
+                <id>javanto-releases</id>
+                <url>https://raw.github.com/javanto/repository/releases</url>
+                <releases>
+                        <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                        <enabled>false</enabled>
+                </snapshots>
+        </repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
-			<id>javanto-releases</id>
-			<url>https://raw.github.com/javanto/repository/releases</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
+                <id>javanto-releases</id>
+                <url>https://raw.github.com/javanto/repository/releases</url>
+                <releases>
+                        <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                        <enabled>false</enabled>
+                </snapshots>
+        </pluginRepository>
 		<pluginRepository>
                <id>google-staging</id>
                <name>Google Staging</name>

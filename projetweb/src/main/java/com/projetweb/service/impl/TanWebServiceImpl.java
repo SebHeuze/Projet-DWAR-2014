@@ -18,6 +18,7 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.UrlEncodedContent;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.Gson;
 import com.projetweb.bean.AddressTanResponse;
 import com.projetweb.bean.Adresse;
@@ -48,7 +49,7 @@ public class TanWebServiceImpl implements TanWebService{
 		Gson gson = new Gson();
 		
 		try {  
-			UrlFetchTransport HTTP_TRANSPORT = new UrlFetchTransport();
+			NetHttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 			HttpRequestFactory httpRequestFactory = HTTP_TRANSPORT.createRequestFactory();
 			Map<String, String> paramsMap = new HashMap<String, String>();
 			paramsMap.put("nom", adresse);
