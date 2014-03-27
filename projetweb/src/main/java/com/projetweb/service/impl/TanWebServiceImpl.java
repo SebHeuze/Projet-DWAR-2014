@@ -8,6 +8,7 @@ import java.util.List;
 import static com.projetweb.helper.HttpRequestHelper.postHttpRequest;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.projetweb.bean.AddressTanResponse;
@@ -31,18 +32,22 @@ public class TanWebServiceImpl implements TanWebService{
 	 */
 	private String serviceItineraire;
 	
+	/**
+	 * Logger
+	 */
+	private final static Logger LOG = Logger.getLogger(TanWebServiceImpl.class.getName());
+	
 	@Override
 	public List<Adresse> findAdresses(String adresse) {
 		
-		List<Adresse> adressesList = new ArrayList<Adresse>();
-		
 		Gson gson = new Gson();
-		
-
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("nom", adresse);
+		
+		LOG.info("TanWebServiceImpl::findAdresses Appel TAN avec l'adresse "+adresse);
 		Reader result = postHttpRequest(tanUrl + serviceAdresse,paramsMap);
 		
+		LOG.info("TanWebServiceImpl::findAdresses Transformation JSON");
 		AddressTanResponse[] listeReponse = (AddressTanResponse[]) gson.fromJson(result, AddressTanResponse[].class);
 		AddressTanResponse reponseTan = listeReponse[0];
 		

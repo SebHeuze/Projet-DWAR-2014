@@ -6,8 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class Adresse {
 	
 	
-	private float coordX;
-	private float coordY;
+	private Coordonnee coord;
 	
 	@SerializedName("id")
 	private String id;
@@ -25,6 +24,12 @@ public class Adresse {
 	public Adresse() {
 	}
 
+	/**
+	 * ToString
+	 */
+	public String toString(){
+		return nom + " " + cp + " " + ville;
+	}
 
 	/**
 	 * @return the id
@@ -41,37 +46,6 @@ public class Adresse {
 		this.id = id;
 	}
 
-
-	/**
-	 * @return the coordX
-	 */
-	public float getCoordX() {
-		return coordX;
-	}
-
-
-	/**
-	 * @param coordX the coordX to set
-	 */
-	public void setCoordX(float coordX) {
-		this.coordX = coordX;
-	}
-
-
-	/**
-	 * @return the coordY
-	 */
-	public float getCoordY() {
-		return coordY;
-	}
-
-
-	/**
-	 * @param coordY the coordY to set
-	 */
-	public void setCoordY(float coordY) {
-		this.coordY = coordY;
-	}
 
 
 	/**
@@ -119,6 +93,22 @@ public class Adresse {
 	 */
 	public void setVille(String ville) {
 		this.ville = ville;
+	}
+
+
+	/**
+	 * @return the coord
+	 */
+	public Coordonnee getCoord() {
+		return coord;
+	}
+
+
+	/**
+	 * @param coord the coord to set
+	 */
+	public void setCoord(Coordonnee coord) {
+		this.coord = coord;
 	}
 
 	

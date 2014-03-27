@@ -47,6 +47,11 @@
 	    <property name="serviceAdresse" value="${serviceAdresse}"/>
 	</bean>
 
+	<bean id="GoogleWebService" class="com.projetweb.service.impl.GoogleWebServiceImpl" >
+	    <property name="googleMapsAPIUrl" value="${googleMapsAPIUrl}" />
+	    <property name="serviceGeocode" value="${serviceGeocode}" />
+	</bean>
+	
 	<!--  CONFIGURATION -->
 	<context:property-placeholder
     location="classpath:projetweb.properties" />
