@@ -8,30 +8,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jdo.TransactionAwarePersistenceManagerFactoryProxy;
 import org.springframework.stereotype.Repository;
 
-import com.projetweb.AbstractJdoDAO;
-import com.projetweb.bean.Arret;
-import com.projetweb.dao.ArretDAO;
+import com.projetweb.AbstractJdoDao;
+import com.projetweb.bean.Adresse;
+import com.projetweb.dao.AdresseDAO;
 
 @Repository
-public class ArretDAOImpl extends AbstractJdoDAO implements ArretDAO {
+public class AdresseDAOImpl extends AbstractJdoDao implements AdresseDAO {
 
-	@Autowired
-	public ArretDAOImpl(
+	public AdresseDAOImpl(
 			final TransactionAwarePersistenceManagerFactoryProxy pmf) {
 		super(pmf);
 	}
 
     @Override
     @Transactional
-    public Arret store(Arret arret) {
-    	return getPersistenceManager().makePersistent(arret);
+    public Adresse store(Adresse adresse) {
+    	return getPersistenceManager().makePersistent(adresse);
     }
 
     @Override
     @Transactional
     @SuppressWarnings("unchecked")
-    public List<Arret> getAll() {
-    	return (List<Arret>) getPersistenceManager()
-				.newQuery(Arret.class).execute();
+    public List<Adresse> getAll() {
+    	return (List<Adresse>) getPersistenceManager()
+				.newQuery(Adresse.class).execute();
     }
 }

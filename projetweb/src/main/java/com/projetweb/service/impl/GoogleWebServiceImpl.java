@@ -44,7 +44,7 @@ public class GoogleWebServiceImpl implements GoogleWebService{
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("address", adresse);
 		paramsMap.put("sensor", "false");
-		LOG.info("GoogleWebServiceImpl::findCoordonnees Appel TAN avec l'adresse "+adresse);
+		LOG.info("GoogleWebServiceImpl::findCoordonnees Appel Google avec l'adresse "+adresse);
 		Reader result = getHttpRequest(googleMapsAPIUrl + serviceGeocode,paramsMap);
 		
 		LOG.info("GoogleWebServiceImpl::findCoordonnees Transformation JSON");

@@ -5,11 +5,11 @@ import javax.jdo.PersistenceManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jdo.TransactionAwarePersistenceManagerFactoryProxy;
 
-public abstract class AbstractJdoDAO {
+public abstract class AbstractJdoDao {
 	private final TransactionAwarePersistenceManagerFactoryProxy pmf;
 
 	@Autowired
-	public AbstractJdoDAO(
+	public AbstractJdoDao(
 			final TransactionAwarePersistenceManagerFactoryProxy pmf) {
 		this.pmf = pmf;
 	}

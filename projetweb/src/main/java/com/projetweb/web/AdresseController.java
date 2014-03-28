@@ -11,25 +11,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.projetweb.bean.Adresse;
-import com.projetweb.bean.Coordonnee;
-import com.projetweb.service.GoogleWebService;
-import com.projetweb.service.TanWebService;
+import com.projetweb.service.AdresseService;
+
  
 @Controller
 @RequestMapping("/adresse")
 public class AdresseController {
  
+	
 	/**
 	 * Service d'appel TAN
 	 */
 	@Autowired
-	private TanWebService tanWebService;
+	private AdresseService adresseService;
 	
-	/**
-	 * Service d'appel API Googke
-	 */
-	@Autowired
-	private GoogleWebService googleWebService;
 	
 	/**
 	 * Logger
@@ -44,11 +39,8 @@ public class AdresseController {
 	@RequestMapping(value="/find", method = RequestMethod.POST)
 	public @ResponseBody List<Adresse> findAdress(@RequestParam String adresse) {
 		LOG.info("AdresseController::findAdress Début appel controlleur");
-		List<Adresse> listeAdresse = tanWebService.findAdresses(adresse);
-		for(Adresse uneAdresse : listeAdresse){
-			Coordonnee coord = googleWebService.findCoordonnees(uneAdresse.toString());
-			uneAdresse.setCoord(coord);
-		}
+		List<Adresse> listeAdresse = adresseService.findAdressesWithCoord(adresse);
+		
 		return listeAdresse;
 	}
  

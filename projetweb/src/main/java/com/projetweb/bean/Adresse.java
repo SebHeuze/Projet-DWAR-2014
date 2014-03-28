@@ -1,22 +1,32 @@
 package com.projetweb.bean;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
-
+@PersistenceCapable
 public class Adresse {
 	
 	
 	private Coordonnee coord;
 	
+	@PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	@SerializedName("id")
 	private String id;
 	
+	@Persistent
 	@SerializedName("nom")
 	private String nom;
 	
+	@Persistent
 	@SerializedName("cp")
 	private int cp;
 	
+	@Persistent
 	@SerializedName("ville")
 	private String ville;
 	

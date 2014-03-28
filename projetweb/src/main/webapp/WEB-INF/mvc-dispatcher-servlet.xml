@@ -41,6 +41,13 @@
 		</property>
 	</bean>
 	
+	<bean id="AdresseService" class="com.projetweb.service.impl.AdresseServiceImpl" >
+	</bean>
+	
+	<bean id="AdresseDAO" class="com.projetweb.dao.impl.AdresseDAOImpl" >
+	   <constructor-arg ref="transactionAwarePersistenceManagerFactoryProxy"/>
+	</bean>
+	
 	<bean id="TanWebService" class="com.projetweb.service.impl.TanWebServiceImpl" >
 	    <property name="tanUrl" value="${tanUrl}" />
 	    <property name="serviceItineraire" value="${serviceItineraire}" />
@@ -68,7 +75,7 @@
 		class="org.springframework.orm.jdo.GAETransactionAwarePersistenceManagerFactoryProxy"
 		p:targetPersistenceManagerFactory-ref="localPersistenceManagerFactoryBean"
 		p:allowCreate="false" />
-
+	
 	<bean id="localPersistenceManagerFactoryBean"
 		class="org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean">
 		<property name="jdoPropertyMap">
@@ -77,9 +84,10 @@
 				</prop>
 				<prop key="javax.jdo.option.ConnectionURL">appengine</prop>
 				<prop key="javax.jdo.option.NontransactionalRead">true</prop>
-				<prop key="javax.jdo.option.NontransactionalWrite">false</prop>
-				<prop key="javax.jdo.option.RetainValues">false</prop>
+				<prop key="javax.jdo.option.NontransactionalWrite">true</prop>
+				<prop key="javax.jdo.option.RetainValues">true</prop>
 				<prop key="javax.jdo.option.DetachAllOnCommit">true</prop>
+				<prop key="datanucleus.appengine.autoCreateDatastoreTxns">true</prop>
 				<prop key="javax.jdo.option.Multithreaded">true</prop>
 				<prop key="datanucleus.appengine.ignorableMetaDataBehavior">NONE</prop>
 			</props>
