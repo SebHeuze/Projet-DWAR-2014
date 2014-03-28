@@ -15,6 +15,6 @@ public interface AdresseService {
 	 * @param adresse
 	 * @return Coordonnee les coordonnées
 	 */
-	public List<Adresse> findAdressesWithCoord(String adresse);
+	List<Adresse> findAdressesWithCoord(String adresse);
 	
 }

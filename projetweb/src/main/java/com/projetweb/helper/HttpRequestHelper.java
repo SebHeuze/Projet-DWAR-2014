@@ -6,16 +6,17 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URLEncoder;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+
 import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpMethod;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.UrlEncodedContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.projetweb.service.impl.GoogleWebServiceImpl;
 
 
 public class HttpRequestHelper {
@@ -46,7 +47,7 @@ public class HttpRequestHelper {
 				System.out.println(response.getStatusCode());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "HttpRequestHelper::postHttpRequest L'appel POST a échoué ",e);
 		} 
 		return reader;
 	}
@@ -74,7 +75,7 @@ public class HttpRequestHelper {
 				System.out.println(response.getStatusCode());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "HttpRequestHelper::getHttpRequest L'appel get a échoué ",e);
 		} 
 		return reader;
 	}

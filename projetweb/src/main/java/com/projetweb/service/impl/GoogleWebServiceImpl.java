@@ -1,23 +1,17 @@
 package com.projetweb.service.impl;
 
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import static com.projetweb.helper.HttpRequestHelper.postHttpRequest;
 import static com.projetweb.helper.HttpRequestHelper.getHttpRequest;
 
 import java.util.Map;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
-import com.projetweb.bean.AddressTanResponse;
-import com.projetweb.bean.Adresse;
 import com.projetweb.bean.Coordonnee;
 import com.projetweb.bean.GeocodeGoogleResponse;
 import com.projetweb.service.GoogleWebService;
-import com.projetweb.service.TanWebService;
 
 public class GoogleWebServiceImpl implements GoogleWebService{
 	

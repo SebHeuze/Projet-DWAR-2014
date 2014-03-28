@@ -8,11 +8,11 @@ public interface AdresseDAO {
     /**
      * Créer une nouvelle adresse
      */
-    public Adresse store(Adresse adresse);
+    Adresse store(Adresse adresse);
 
     
     /**
      * Retourne la liste de toutes les adresses
      */
-    public List<Adresse> getAll();
+    List<Adresse> getAll();
 }
