@@ -44,8 +44,7 @@
 	<bean id="AdresseService" class="com.projetweb.service.impl.AdresseServiceImpl" >
 	</bean>
 	
-	<bean id="AdresseDAO" class="com.projetweb.dao.impl.AdresseDAOImpl" >
-	   <constructor-arg ref="transactionAwarePersistenceManagerFactoryProxy"/>
+	<bean id="AdresseDAO" class="com.projetweb.dao.impl.AdresseDAOImpl"	scope="singleton">
 	</bean>
 	
 	<bean id="TanWebService" class="com.projetweb.service.impl.TanWebServiceImpl" >
@@ -64,6 +63,16 @@
     location="classpath:projetweb.properties" />
 
 	<!--  DATASTORE -->
+	
+	<!-- <bean id="persistenceManagerFactory"
+	  class="org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean">
+	  <property name="persistenceManagerFactoryName" value="transactions-optional" />
+	 </bean>
+	
+	 <bean id="transactionManager" class="org.springframework.orm.jdo.JdoTransactionManager">
+	  <property name="persistenceManagerFactory" ref="persistenceManagerFactory" />
+	 </bean>
+	 
 	<bean id="autoproxy"
 		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -75,7 +84,6 @@
 		class="org.springframework.orm.jdo.GAETransactionAwarePersistenceManagerFactoryProxy"
 		p:targetPersistenceManagerFactory-ref="localPersistenceManagerFactoryBean"
 		p:allowCreate="false" />
-	
 	<bean id="localPersistenceManagerFactoryBean"
 		class="org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean">
 		<property name="jdoPropertyMap">
@@ -93,5 +101,8 @@
 			</props>
 		</property>
 	</bean>
+	-->
  
+ 
+ 	
 </beans>

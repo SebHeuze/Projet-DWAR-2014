@@ -2,6 +2,7 @@ package com.projetweb.dao.impl;
 
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,28 +10,26 @@ import org.springframework.orm.jdo.TransactionAwarePersistenceManagerFactoryProx
 import org.springframework.stereotype.Repository;
 
 import com.projetweb.AbstractJdoDao;
+import com.projetweb.PMF;
 import com.projetweb.bean.Adresse;
 import com.projetweb.dao.AdresseDAO;
 
 @Repository
-public class AdresseDAOImpl extends AbstractJdoDao implements AdresseDAO {
+public class AdresseDAOImpl implements AdresseDAO {
 
-	public AdresseDAOImpl(
-			final TransactionAwarePersistenceManagerFactoryProxy pmf) {
-		super(pmf);
-	}
-
+	
     @Override
     @Transactional
     public Adresse store(Adresse adresse) {
-    	return getPersistenceManager().makePersistent(adresse);
+    	PersistenceManager pm = PMF.get().getPersistenceManager();
+    	return pm.makePersistent(adresse);
     }
 
     @Override
     @Transactional
     @SuppressWarnings("unchecked")
     public List<Adresse> getAll() {
-    	return (List<Adresse>) getPersistenceManager()
-				.newQuery(Adresse.class).execute();
+    	PersistenceManager pm = PMF.get().getPersistenceManager();
+    	return (List<Adresse>) pm.newQuery(Adresse.class).execute();
     }
 }

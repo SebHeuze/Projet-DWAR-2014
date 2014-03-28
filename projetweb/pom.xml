@@ -121,7 +121,7 @@
 				<version>1.1.4</version>
 				<configuration>
 					<!-- Make sure this path contains your persistent classes! -->
-					<mappingIncludes>greeting/*.class</mappingIncludes>
+					<mappingIncludes>**/bean/*.class</mappingIncludes>
 					<verbose>true</verbose>
 					<enhancerName>ASM</enhancerName>
 					<api>JDO</api>
