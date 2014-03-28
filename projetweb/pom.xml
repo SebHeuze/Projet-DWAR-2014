@@ -21,6 +21,18 @@
 				</configuration>
 			</plugin>
 			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>sonar-maven-plugin</artifactId>
+		        <version>${sonar.plugin.version}</version>
+		        <!-- no default executions -->
+		        <configuration>
+		            <sonar.language>java</sonar.language>
+		            <sonar.exclusions>
+		                **/generated/*
+		            </sonar.exclusions>
+		        </configuration>
+		    </plugin>
+			<plugin>
 				<groupId>com.google.appengine</groupId>
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>${gae.version}</version>
@@ -533,6 +545,7 @@
 	</dependencies>
 
 	<properties>
+		<sonar.plugin.version>2.2</sonar.plugin.version>
 		<maven.executable>mvn</maven.executable>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gae.version>1.8.4</gae.version>

@@ -1,10 +1,12 @@
-package com.projetweb.bean.geocodegoogleresponse;
+package com.projetweb.bean.generated;
+
+
 
 import com.google.gson.annotations.Expose;
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
-public class Northeast {
+public class Southwest {
 
 @Expose
 private float lat;

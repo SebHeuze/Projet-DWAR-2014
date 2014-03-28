@@ -1,4 +1,4 @@
-package com.projetweb.bean.geocodegoogleresponse;
+package com.projetweb.bean.generated;
 
 import com.google.gson.annotations.Expose;
 import com.projetweb.bean.Coordonnee;

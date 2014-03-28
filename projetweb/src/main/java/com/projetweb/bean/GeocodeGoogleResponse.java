@@ -1,8 +1,11 @@
 package com.projetweb.bean;
 
 import java.util.ArrayList;
-import com.projetweb.bean.geocodegoogleresponse.Result;
+
+import com.projetweb.bean.generated.Result;
+
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 
 public class GeocodeGoogleResponse {

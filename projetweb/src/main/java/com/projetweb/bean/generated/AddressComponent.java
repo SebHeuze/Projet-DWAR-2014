@@ -1,4 +1,4 @@
-package com.projetweb.bean.geocodegoogleresponse;
+package com.projetweb.bean.generated;
 
 import java.util.ArrayList;
 import java.util.List;

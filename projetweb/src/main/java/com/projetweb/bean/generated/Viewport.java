@@ -1,10 +1,11 @@
-package com.projetweb.bean.geocodegoogleresponse;
+package com.projetweb.bean.generated;
 
-import com.google.gson.annotations.Expose;
 import javax.annotation.Generated;
 
+import com.google.gson.annotations.Expose;
+
 @Generated("org.jsonschema2pojo")
-public class Bounds {
+public class Viewport {
 
 @Expose
 private Northeast northeast;
