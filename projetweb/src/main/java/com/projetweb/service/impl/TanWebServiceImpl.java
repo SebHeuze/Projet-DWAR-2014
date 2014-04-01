@@ -62,7 +62,7 @@ public class TanWebServiceImpl implements TanWebService{
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("depart", adresseDepart.getId());
 		paramsMap.put("arrive", adresseArrivee.getId());
-		paramsMap.put("type", "0");
+		paramsMap.put("type", "1");
 		paramsMap.put("accessible", "0");
 		paramsMap.put("temps", DATE_FORMAT_TAN.format(dateItineraire));
 		paramsMap.put("retour", "0");

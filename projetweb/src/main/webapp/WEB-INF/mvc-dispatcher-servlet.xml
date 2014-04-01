@@ -56,6 +56,7 @@
 	<bean id="GoogleWebService" class="com.projetweb.service.impl.GoogleWebServiceImpl" >
 	    <property name="googleMapsAPIUrl" value="${googleMapsAPIUrl}" />
 	    <property name="serviceGeocode" value="${serviceGeocode}" />
+	    <property name="serviceDistance" value="${serviceDistance}"/>
 	</bean>
 	
 	<!--  CONFIGURATION -->

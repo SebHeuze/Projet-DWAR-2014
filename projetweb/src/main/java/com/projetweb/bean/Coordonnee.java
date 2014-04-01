@@ -51,4 +51,9 @@ public class Coordonnee {
 		this.latitude = latitude;
 	}
 	
+	@Override
+	public String toString(){
+		return longitude + "," + latitude;
+	}
+	
 }

@@ -9,8 +9,10 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.projetweb.bean.Adresse;
 import com.projetweb.bean.Coordonnee;
 import com.projetweb.bean.GeocodeGoogleResponse;
+import com.projetweb.bean.generated.google.DistanceGoogleResponse;
 import com.projetweb.service.GoogleWebService;
 
 public class GoogleWebServiceImpl implements GoogleWebService{
@@ -25,11 +27,15 @@ public class GoogleWebServiceImpl implements GoogleWebService{
 	 */
 	private String serviceGeocode;
 	
+	/**
+	 * Adresse service distance
+	 */
+	private String serviceDistance;
 	
 	/**
 	 * Logger
 	 */
-	private final static Logger LOG = Logger.getLogger(GoogleWebServiceImpl.class.getName());
+	private static final Logger LOG = Logger.getLogger(GoogleWebServiceImpl.class.getName());
 
 
 	@Override
@@ -47,6 +53,19 @@ public class GoogleWebServiceImpl implements GoogleWebService{
 		return googleResponse.getResults().get(0).getGeometry().getLocation();
 	}	
 	
+	public DistanceGoogleResponse getItineraire(Adresse depart, Adresse arrivee) {
+		Gson gson = new Gson();
+		Map<String, String> paramsMap = new HashMap<String, String>();
+		paramsMap.put("origins", depart.getCoord().toString());
+		paramsMap.put("destinations", arrivee.getCoord().toString());
+		LOG.info("GoogleWebServiceImpl::getItineraire Appel Google avec les coordonnees "+depart.getCoord().toString()+" et "+arrivee.getCoord().toString());
+		Reader result = getHttpRequest(googleMapsAPIUrl + serviceDistance,paramsMap);
+
+		LOG.info("GoogleWebServiceImpl::getItineraire Transformation JSON");
+		DistanceGoogleResponse googleResponse = (DistanceGoogleResponse) gson.fromJson(result, DistanceGoogleResponse.class);
+		
+		return googleResponse;
+	}	
 
 	/**
 	 * @param googleMapsAPIUrl the googleMapsAPIUrl to set
@@ -61,6 +80,16 @@ public class GoogleWebServiceImpl implements GoogleWebService{
 	 */
 	public void setServiceGeocode(String serviceGeocode) {
 		this.serviceGeocode = serviceGeocode;
+	}
+
+
+	public String getServiceDistance() {
+		return serviceDistance;
+	}
+
+
+	public void setServiceDistance(String serviceDistance) {
+		this.serviceDistance = serviceDistance;
 	}
 
 
