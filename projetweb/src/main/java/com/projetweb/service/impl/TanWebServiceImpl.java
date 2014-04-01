@@ -1,9 +1,11 @@
 package com.projetweb.service.impl;
 
 import java.io.Reader;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.projetweb.helper.ConstantesHelper.DATE_FORMAT_TAN;
 import static com.projetweb.helper.HttpRequestHelper.postHttpRequest;
 
 import java.util.Map;
@@ -12,6 +14,7 @@ import java.util.logging.Logger;
 import com.google.gson.Gson;
 import com.projetweb.bean.AddressTanResponse;
 import com.projetweb.bean.Adresse;
+import com.projetweb.bean.ItineraireTanResponse;
 import com.projetweb.service.TanWebService;
 
 public class TanWebServiceImpl implements TanWebService{
@@ -53,6 +56,26 @@ public class TanWebServiceImpl implements TanWebService{
 		return reponseTan.getLieux();
 	}
 
+	@Override
+	public ItineraireTanResponse[] itineraire(Adresse adresseDepart, Adresse adresseArrivee, Date dateItineraire) {
+		Gson gson = new Gson();
+		Map<String, String> paramsMap = new HashMap<String, String>();
+		paramsMap.put("depart", adresseDepart.getId());
+		paramsMap.put("arrive", adresseArrivee.getId());
+		paramsMap.put("type", "0");
+		paramsMap.put("accessible", "0");
+		paramsMap.put("temps", DATE_FORMAT_TAN.format(dateItineraire));
+		paramsMap.put("retour", "0");
+		
+		LOG.info("TanWebServiceImpl::itineraire Appel TAN, Adresse depart : "+adresseDepart.toString()+ " Adresse arrivee : "+adresseArrivee.toString());
+		Reader result = postHttpRequest(tanUrl + serviceItineraire,paramsMap);
+		
+		LOG.info("TanWebServiceImpl::itineraire Transformation JSON");
+		ItineraireTanResponse[] itineraireTanResponse = (ItineraireTanResponse[]) gson.fromJson(result, ItineraireTanResponse[].class);
+		
+		return itineraireTanResponse;
+	}
+	
 	/**
 	 * @param tanUrl the tanUrl to set
 	 */
@@ -73,5 +96,7 @@ public class TanWebServiceImpl implements TanWebService{
 	public void setServiceItineraire(String serviceItineraire) {
 		this.serviceItineraire = serviceItineraire;
 	}
+
+	
 
 }

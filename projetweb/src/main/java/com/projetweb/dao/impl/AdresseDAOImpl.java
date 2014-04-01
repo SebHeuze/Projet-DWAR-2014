@@ -28,4 +28,16 @@ public class AdresseDAOImpl implements AdresseDAO {
     public List<Adresse> getAll() {
     	return (List<Adresse>) pm.newQuery(Adresse.class).execute();
     }
+    
+    @Override
+    @Transactional
+    public Adresse getAdresseById(String idAdresse) {
+    	Adresse returnAdresse = null;
+    	try {
+    		returnAdresse = pm.getObjectById(Adresse.class, idAdresse);
+    	} catch (Exception e) {
+        }
+    	return returnAdresse;  
+    }
+    
 }

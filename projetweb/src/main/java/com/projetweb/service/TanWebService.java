@@ -1,10 +1,12 @@
 package com.projetweb.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.projetweb.bean.Adresse;
+import com.projetweb.bean.ItineraireTanResponse;
 
 @Service
 public interface TanWebService {
@@ -16,5 +18,13 @@ public interface TanWebService {
 	 * @return List<Adresse> la liste des adresses connues
 	 */
 	public List<Adresse> findAdresses(String adresse);
+
+	/**
+	 * Trouve l'itinéraire TAN
+	 * @param adresseDepart
+	 * @param adresseArrivee
+	 * @return 
+	 */
+	public ItineraireTanResponse[] itineraire(Adresse adresseDepart, Adresse adresseArrivee, Date dateItineraire);
 	
 }

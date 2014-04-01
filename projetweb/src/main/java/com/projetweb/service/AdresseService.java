@@ -1,5 +1,6 @@
 package com.projetweb.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -16,5 +17,13 @@ public interface AdresseService {
 	 * @return Coordonnee les coordonnées
 	 */
 	List<Adresse> findAdressesWithCoord(String adresse);
+
+	/**
+	 * Trouve les itinéraires Bus et Voiture
+	 * @param idAdresseDepart L'id TAN de l'adresse de départ
+	 * @param idAdresseArrivee L'id TAN de l'adresse d'arrivee
+	 * @return Informations Itinéraire
+	 */
+	List<Adresse> findItineraire(String idAdresseDepart, String idAdresseArrivee, Date dateItineraire);
 	
 }

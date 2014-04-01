@@ -15,4 +15,12 @@ public interface AdresseDAO {
      * Retourne la liste de toutes les adresses
      */
     List<Adresse> getAll();
+
+
+    /**
+     * Retourne l'adresse avec l'id fourni en paramètre
+     * @param String idAdresse l'id adresse
+     * @return l'adresse ou null
+     */
+	Adresse getAdresseById(String idAdresse);
 }

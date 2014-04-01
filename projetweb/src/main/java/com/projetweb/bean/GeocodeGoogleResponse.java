@@ -2,7 +2,7 @@ package com.projetweb.bean;
 
 import java.util.ArrayList;
 
-import com.projetweb.bean.generated.Result;
+import com.projetweb.bean.generated.google.Result;
 
 import java.util.List;
 

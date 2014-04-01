@@ -1,4 +1,4 @@
-package com.projetweb.bean.generated;
+package com.projetweb.bean.generated.google;
 
 import java.util.ArrayList;
 import java.util.List;

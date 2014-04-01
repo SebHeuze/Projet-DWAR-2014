@@ -40,7 +40,7 @@ public class GoogleWebServiceImpl implements GoogleWebService{
 		paramsMap.put("sensor", "false");
 		LOG.info("GoogleWebServiceImpl::findCoordonnees Appel Google avec l'adresse "+adresse);
 		Reader result = getHttpRequest(googleMapsAPIUrl + serviceGeocode,paramsMap);
-		
+
 		LOG.info("GoogleWebServiceImpl::findCoordonnees Transformation JSON");
 		GeocodeGoogleResponse googleResponse = (GeocodeGoogleResponse) gson.fromJson(result, GeocodeGoogleResponse.class);
 		

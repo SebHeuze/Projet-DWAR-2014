@@ -11,6 +11,9 @@ import java.util.logging.Logger;
 
 
 
+
+import org.apache.http.util.EntityUtils;
+
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -35,7 +38,6 @@ public class HttpRequestHelper {
 			
 			req.setFollowRedirects(true);
 			HttpResponse response = req.execute();
-	            
 	        
 			if(response.getStatusCode() == 200) {
 				InputStream content = response.getContent();

@@ -1,11 +1,10 @@
-package com.projetweb.bean.generated;
-
-import javax.annotation.Generated;
+package com.projetweb.bean.generated.google;
 
 import com.google.gson.annotations.Expose;
+import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
-public class Viewport {
+public class Bounds {
 
 @Expose
 private Northeast northeast;
