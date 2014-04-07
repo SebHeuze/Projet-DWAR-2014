@@ -1,5 +1,6 @@
 package com.projetweb.bean;
 
+import javax.jdo.annotations.ForeignKey;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -10,7 +11,8 @@ import com.google.gson.annotations.SerializedName;
 @PersistenceCapable
 public class Adresse {
 	
-	
+	@Persistent(serialized = "true")
+	@SerializedName("coord")
 	private Coordonnee coord;
 	
 	@PrimaryKey

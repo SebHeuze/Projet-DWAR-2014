@@ -9,7 +9,12 @@ import com.google.gson.annotations.SerializedName;
  * @author SEB
  * Classe pour stocker des coordonnées
  */
-public class Coordonnee {
+public class Coordonnee implements java.io.Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Longitude :X
