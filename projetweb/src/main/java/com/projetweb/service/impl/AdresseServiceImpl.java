@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.projetweb.bean.Adresse;
 import com.projetweb.bean.Coordonnee;
+import com.projetweb.bean.DistanceGoogleResponse;
 import com.projetweb.bean.ItineraireTanResponse;
 import com.projetweb.dao.AdresseDAO;
 import com.projetweb.service.AdresseService;
@@ -60,14 +61,17 @@ public class AdresseServiceImpl implements AdresseService{
 	}
 
 	@Override
-	public List<Adresse> findItineraire(String idAdresseDepart,	String idAdresseArrivee, Date dateItineraire) {
+	public List<Adresse> findItineraire(String idAdresseDepart,	String idAdresseArrivee, Date dateItineraire, float prixCarburant, float consommationVoiture) {
 		//On récupère les deux adresses en base
 		LOG.info("AdresseServiceImpl::findItineraire récupération des adresses en base");
 		Adresse adresseDepart = adresseDAO.getAdresseById(idAdresseDepart);
 		Adresse adresseArrivee = adresseDAO.getAdresseById(idAdresseArrivee);
 		
+		//Récupération itinéraire tan
 		ItineraireTanResponse[] itineraireTanResponse = tanWebService.itineraire(adresseDepart, adresseArrivee, dateItineraire);
 		
+		//Récupération itinéraire google
+		DistanceGoogleResponse distanceGoogleResponse = googleWebService.getItineraire(adresseDepart, adresseArrivee);
 		return null;
 	}
 

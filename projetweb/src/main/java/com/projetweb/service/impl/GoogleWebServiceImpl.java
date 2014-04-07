@@ -11,8 +11,8 @@ import java.util.logging.Logger;
 import com.google.gson.Gson;
 import com.projetweb.bean.Adresse;
 import com.projetweb.bean.Coordonnee;
+import com.projetweb.bean.DistanceGoogleResponse;
 import com.projetweb.bean.GeocodeGoogleResponse;
-import com.projetweb.bean.generated.google.DistanceGoogleResponse;
 import com.projetweb.service.GoogleWebService;
 
 public class GoogleWebServiceImpl implements GoogleWebService{
@@ -52,7 +52,7 @@ public class GoogleWebServiceImpl implements GoogleWebService{
 		
 		return googleResponse.getResults().get(0).getGeometry().getLocation();
 	}	
-	
+	@Override
 	public DistanceGoogleResponse getItineraire(Adresse depart, Adresse arrivee) {
 		Gson gson = new Gson();
 		Map<String, String> paramsMap = new HashMap<String, String>();

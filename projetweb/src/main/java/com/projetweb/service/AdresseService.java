@@ -22,8 +22,10 @@ public interface AdresseService {
 	 * Trouve les itinéraires Bus et Voiture
 	 * @param idAdresseDepart L'id TAN de l'adresse de départ
 	 * @param idAdresseArrivee L'id TAN de l'adresse d'arrivee
+	 * @param consommationVoiture 
+	 * @param coutCarburant 
 	 * @return Informations Itinéraire
 	 */
-	List<Adresse> findItineraire(String idAdresseDepart, String idAdresseArrivee, Date dateItineraire);
+	List<Adresse> findItineraire(String idAdresseDepart, String idAdresseArrivee, Date dateItineraire, float coutCarburant, float consommationVoiture);
 	
 }

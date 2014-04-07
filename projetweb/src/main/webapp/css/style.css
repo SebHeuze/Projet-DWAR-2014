@@ -1,0 +1,33 @@
+body { margin : 0px;background-color: #888}
+
+#header {width:100%; height:150px; background-color: #555}
+
+
+#container{position:relative;width:80%;margin:auto;background-color: #888}
+#container #map{width:100%;height:700px;margin:auto;}
+#cadre, #cadre_depart, #cadre_arrivee{box-shadow: 1px 1px 50px #555; z-index:99; right:10px; top:100px; position:absolute; background-color: #E2E2E2;width: 350px; height: 500px}
+#cadre .form-horizontal {height:500px; margin-top:-10px;}
+#cadre form #fields, #cadre_depart form #fields, , #cadre_arrivee form #fields{margin : 10px;}
+#cadre form legend , #cadre_depart form legend, #cadre_arrivee form legend {text-align: center; padding-top:5px; background-color: #70A8D8; padding-left:10px; height: 40px}
+#footer {width:100%; height:150px; background-color: #888}
+
+
+
+
+
+
+div.ui-datepicker { font-size: 80%; }
+.arrondi {
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.arronditop {
+	-moz-border-top-left-radius: 8px;
+    -webkit-border-top-left-radius: 8px;
+    border-top-left-radius: 8px;
+    -moz-border-top-right-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+    border-top-right-radius: 10px;
+}

@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,7 +46,8 @@ public class AdresseController {
 	 * @return la liste d'adresse au format JSON
 	 */
 	@RequestMapping(value="/find", method = RequestMethod.POST)
-	public @ResponseBody List<Adresse> findAdress(@RequestParam String adresse) {
+	public @ResponseBody List<Adresse> findAdress(@RequestParam String adresse, HttpServletRequest req, HttpServletResponse res) {
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		LOG.info("AdresseController::findAdress Début appel controlleur");
 		List<Adresse> listeAdresse = adresseService.findAdressesWithCoord(adresse);
 		
@@ -57,9 +60,9 @@ public class AdresseController {
 	 * @return la liste d'adresse au format JSON
 	 */
 	@RequestMapping(value="/itineraire", method = RequestMethod.POST)
-	public @ResponseBody List<Adresse> findItineraire(@RequestParam String idAdresseDepart, @RequestParam String idAdresseArrivee, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date dateItineraire) {
+	public @ResponseBody List<Adresse> findItineraire(@RequestParam String idAdresseDepart, @RequestParam String idAdresseArrivee, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date dateItineraire, @RequestParam float coutCarburant, @RequestParam float consommationVoiture) {
 		LOG.info("AdresseController::findItineraire Début appel controlleur");
-		List<Adresse> listeAdresse = adresseService.findItineraire(idAdresseDepart, idAdresseArrivee, dateItineraire);
+		List<Adresse> listeAdresse = adresseService.findItineraire(idAdresseDepart, idAdresseArrivee, dateItineraire, coutCarburant, consommationVoiture);
 		
 		return listeAdresse;
 	}
