@@ -58,7 +58,7 @@ public class Coordonnee implements java.io.Serializable{
 	
 	@Override
 	public String toString(){
-		return longitude + "," + latitude;
+		return latitude + "," + longitude;
 	}
 	
 }

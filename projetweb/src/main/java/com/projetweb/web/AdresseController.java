@@ -20,6 +20,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.projetweb.bean.Adresse;
+import com.projetweb.bean.BusVsVoiture;
 import com.projetweb.service.AdresseService;
 
  
@@ -60,11 +61,11 @@ public class AdresseController {
 	 * @return la liste d'adresse au format JSON
 	 */
 	@RequestMapping(value="/itineraire", method = RequestMethod.POST)
-	public @ResponseBody List<Adresse> findItineraire(@RequestParam String idAdresseDepart, @RequestParam String idAdresseArrivee, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date dateItineraire, @RequestParam float coutCarburant, @RequestParam float consommationVoiture) {
+	public @ResponseBody BusVsVoiture findItineraire(@RequestParam String idAdresseDepart, @RequestParam String idAdresseArrivee, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date dateDepart, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date dateRetour, @RequestParam String typeVoiture, @RequestParam String carburant, @RequestParam boolean abonnementTan) {
 		LOG.info("AdresseController::findItineraire Début appel controlleur");
-		List<Adresse> listeAdresse = adresseService.findItineraire(idAdresseDepart, idAdresseArrivee, dateItineraire, coutCarburant, consommationVoiture);
+		BusVsVoiture busVsVoiture= adresseService.findItineraire(idAdresseDepart, idAdresseArrivee, dateDepart, dateRetour, typeVoiture, carburant, abonnementTan);
 		
-		return listeAdresse;
+		return busVsVoiture;
 	}
 
 

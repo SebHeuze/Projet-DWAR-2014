@@ -1,5 +1,7 @@
 package com.projetweb.service.impl;
 
+import static com.projetweb.helper.ConstantesHelper.EXPIRATION_TICKET_TAN;
+import static com.projetweb.helper.ConstantesHelper.MS_IN_HOUR;
 import java.io.Reader;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,9 +37,14 @@ public class TanWebServiceImpl implements TanWebService{
 	private String serviceItineraire;
 	
 	/**
+	 * Prix ticket TAN
+	 */
+	private float prixTicketTAN;
+	
+	/**
 	 * Logger
 	 */
-	private final static Logger LOG = Logger.getLogger(TanWebServiceImpl.class.getName());
+	private static final  Logger LOG = Logger.getLogger(TanWebServiceImpl.class.getName());
 	
 	@Override
 	public List<Adresse> findAdresses(String adresse) {
@@ -67,6 +74,7 @@ public class TanWebServiceImpl implements TanWebService{
 		paramsMap.put("temps", DATE_FORMAT_TAN.format(dateItineraire));
 		paramsMap.put("retour", "0");
 		
+		
 		LOG.info("TanWebServiceImpl::itineraire Appel TAN, Adresse depart : "+adresseDepart.toString()+ " Adresse arrivee : "+adresseArrivee.toString());
 		Reader result = postHttpRequest(tanUrl + serviceItineraire,paramsMap);
 		
@@ -75,6 +83,29 @@ public class TanWebServiceImpl implements TanWebService{
 		
 		return itineraireTanResponse;
 	}
+	
+	@Override
+	public float calculCoutTrajet(Date dateDepart, Date dateRetour,	boolean aboTan) {
+		
+		//Si on a un abonnement on ne paie rien
+		if (aboTan){
+			return 0;
+		}
+		
+		float coutTrajet = prixTicketTAN;
+		long deltaDates = dateRetour.getTime() - dateDepart.getTime();
+		
+		//Millisecondes vers heures
+		deltaDates = deltaDates / MS_IN_HOUR;
+		
+		//Si il y aplus d'une heure (ticket expiré) on rachète un ticket
+		if(deltaDates>EXPIRATION_TICKET_TAN){
+			coutTrajet += prixTicketTAN;
+		}
+		
+		return coutTrajet;
+	}
+	
 	
 	/**
 	 * @param tanUrl the tanUrl to set
@@ -96,6 +127,15 @@ public class TanWebServiceImpl implements TanWebService{
 	public void setServiceItineraire(String serviceItineraire) {
 		this.serviceItineraire = serviceItineraire;
 	}
+
+	/**
+	 * @param prixTicketTAN the prixTicketTAN to set
+	 */
+	public void setPrixTicketTAN(float prixTicketTAN) {
+		this.prixTicketTAN = prixTicketTAN;
+	}
+
+	
 
 	
 

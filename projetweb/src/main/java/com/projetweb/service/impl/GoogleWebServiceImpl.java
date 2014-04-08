@@ -58,6 +58,7 @@ public class GoogleWebServiceImpl implements GoogleWebService{
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("origins", depart.getCoord().toString());
 		paramsMap.put("destinations", arrivee.getCoord().toString());
+		paramsMap.put("sensor", "false");
 		LOG.info("GoogleWebServiceImpl::getItineraire Appel Google avec les coordonnees "+depart.getCoord().toString()+" et "+arrivee.getCoord().toString());
 		Reader result = getHttpRequest(googleMapsAPIUrl + serviceDistance,paramsMap);
 

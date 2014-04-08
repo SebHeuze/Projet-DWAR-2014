@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.projetweb.bean.Adresse;
+import com.projetweb.bean.BusVsVoiture;
 
 @Service
 public interface AdresseService {
@@ -26,6 +27,6 @@ public interface AdresseService {
 	 * @param coutCarburant 
 	 * @return Informations Itinéraire
 	 */
-	List<Adresse> findItineraire(String idAdresseDepart, String idAdresseArrivee, Date dateItineraire, float coutCarburant, float consommationVoiture);
+	BusVsVoiture findItineraire(String idAdresseDepart,String idAdresseArrivee, Date dateDepart, Date dateRetour, String typeVoiture, String carburant, boolean abonnementTan);
 	
 }

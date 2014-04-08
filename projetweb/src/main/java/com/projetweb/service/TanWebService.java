@@ -27,4 +27,12 @@ public interface TanWebService {
 	 */
 	public ItineraireTanResponse[] itineraire(Adresse adresseDepart, Adresse adresseArrivee, Date dateItineraire);
 	
+	/**
+	 * Calcul du prix du trajet Bus
+	 * @param dateDepart
+	 * @param dateRetour
+	 * @param aboTan
+	 * @return
+	 */
+	public float calculCoutTrajet(Date dateDepart, Date dateRetour, boolean aboTan);
 }

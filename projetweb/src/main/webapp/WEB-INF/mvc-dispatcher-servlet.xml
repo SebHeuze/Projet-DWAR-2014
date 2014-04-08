@@ -23,6 +23,8 @@
 	<context:component-scan base-package="com.projetweb.web">
 		<context:exclude-filter type="regex"
 			expression="com.projetweb.web.Adresse.*" />
+			<context:exclude-filter type="regex"
+			expression="com.projetweb.web.Cron.*" />
 	</context:component-scan>
  
 	<mvc:annotation-driven />
@@ -30,7 +32,9 @@
 	<!-- Bean to show you Di in GAE, via Spring, also init the MovieController -->
 	<bean class="com.projetweb.web.AdresseController">
 	</bean>
- 
+ 	<bean class="com.projetweb.web.CronController">
+	</bean>
+	
 	<bean
 	   class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
@@ -44,6 +48,11 @@
 	<bean id="AdresseService" class="com.projetweb.service.impl.AdresseServiceImpl" >
 	</bean>
 	
+	<bean id="CronService" class="com.projetweb.service.impl.CronServiceImpl" >
+		<property name="urlEquipementMobilite" value="${urlEquipementMobilite}"/>
+	</bean>
+	
+	
 	<bean id="AdresseDAO" class="com.projetweb.dao.impl.AdresseDAOImpl"	scope="singleton">
 	</bean>
 	
@@ -51,6 +60,7 @@
 	    <property name="tanUrl" value="${tanUrl}" />
 	    <property name="serviceItineraire" value="${serviceItineraire}" />
 	    <property name="serviceAdresse" value="${serviceAdresse}"/>
+	    <property name="prixTicketTAN" value="${prixTicketTAN}"/>
 	</bean>
 
 	<bean id="GoogleWebService" class="com.projetweb.service.impl.GoogleWebServiceImpl" >
