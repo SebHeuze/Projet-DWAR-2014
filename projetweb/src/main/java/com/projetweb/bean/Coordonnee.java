@@ -28,6 +28,11 @@ public class Coordonnee implements java.io.Serializable{
 	@SerializedName("lat")
 	private float latitude;
 
+	
+	public Coordonnee(float latitude,float longitude){
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
 	/**
 	 * @return the longitude
 	 */
