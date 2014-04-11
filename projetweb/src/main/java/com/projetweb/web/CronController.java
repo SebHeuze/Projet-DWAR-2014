@@ -50,6 +50,7 @@ public class CronController {
 	public @ResponseBody String updateParkings() {
 		
 		LOG.info("CronController::updateParkings Début batch mise à jour parkings");
+		
 		cronService.updateParkings();
 		
 		return "";

@@ -28,7 +28,10 @@
 	</context:component-scan>
  
 	<mvc:annotation-driven />
- 
+ 	
+ 	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
+ 	
+ 	
 	<!-- Bean to show you Di in GAE, via Spring, also init the MovieController -->
 	<bean class="com.projetweb.web.AdresseController">
 	</bean>
@@ -50,10 +53,15 @@
 	
 	<bean id="CronService" class="com.projetweb.service.impl.CronServiceImpl" >
 		<property name="urlEquipementMobilite" value="${urlEquipementMobilite}"/>
+		<property name="pathTarifParkingFile" value="${pathTarifParkingFile}"/>
 	</bean>
 	
 	
 	<bean id="AdresseDAO" class="com.projetweb.dao.impl.AdresseDAOImpl"	scope="singleton">
+	</bean>
+	<bean id="TarifParkingDAO" class="com.projetweb.dao.impl.TarifParkingDAOImpl"	scope="singleton">
+	</bean>
+	<bean id="EquipementDAO" class="com.projetweb.dao.impl.EquipementDAOImpl"	scope="singleton">
 	</bean>
 	
 	<bean id="TanWebService" class="com.projetweb.service.impl.TanWebServiceImpl" >

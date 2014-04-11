@@ -1,0 +1,30 @@
+
+http://jsfiddle.net/W2Yyr/
+
+
+1-2/3-7
+6-20 / 20-6
+
+
+2 18h => 3=> 15h
+
+18 compris entre 6 et 20 and day entre daymin et daymax, => si lowerthan_hour(3,15, 2,20)(substract_hour(19, 18)) else substract_hour(20, 18) => 2h
+20h compris entre 20 et 6 et entre daymin et daymax => si substract_hour(6, 20) =>10,
+6h between 6 et 20 and day entre daymin et daymax, => si lowerthan_hour(3,15, 3,20) => substract_hour(15, 6) => 11h
+
+between_hour(end, start, time)
+si end<start
+	return (time>start and time>end) or (time<start and time<end)
+sinon
+	return time>start and time<end
+fin
+
+substract_hour(hour1, hour2)
+si hour1>hour2
+	return hour1-hour2
+sinon
+	return (hour1+24)-hour2
+fin
+
+
+On parcours le tableau, tant que heure_reelle>heure_parking on passe au suivant
