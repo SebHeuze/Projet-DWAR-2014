@@ -1,8 +1,6 @@
 package com.projetweb.bean.generated.tan;
 
 import javax.annotation.Generated;
-
-
 import com.google.gson.annotations.Expose;
 
 @Generated("org.jsonschema2pojo")

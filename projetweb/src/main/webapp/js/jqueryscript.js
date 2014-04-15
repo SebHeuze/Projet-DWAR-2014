@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	$( "#date_depart" ).datetimepicker();
-	$( "#date_retour" ).datetimepicker();
+	$( "#date_depart" ).datetimepicker({ altFormat: "dd-MM-yy", atlTimeFormat: 'hh:mm' });
+	$( "#date_retour" ).datetimepicker({ format: "dd-MM-yy", timeFormat: 'hh:mm' });
 
 	$("#adresse_depart").val("Boulevard Jules Verne");
 	$("#adresse_arrivee").val("Place Commerce");
@@ -80,6 +80,44 @@ $(document).ready(function(){
 		);
 	}
 
+	function getItineraire() {
+     	$.post(
+		  "http://localhost:8080/adresse/itineraire",
+		  { idAdresseDepart: $( "#adresse_depart_id" ).val(),
+			idAdresseArrivee: $( "#adresse_arrivee_id" ).val(),
+			dateDepart:"d",
+			dateRetour:"d",
+			typeVoiture:"d",
+			carburant:"d",
+			abonnementTan:"d"
+		  },
+		  function(data){
+		  			 if(data.length>1){
+		  			 	$("#adresses_arrivee").append("<ul>")
+		  			 	var markerBounds = new google.maps.LatLngBounds();
+		  			 	$.each( data, function( key, value ) {
+		  			 		var latlng = new google.maps.LatLng(value.coord.latitude, value.coord.longitude);
+		  			 		addmarker(latlng)
+		  			 		markerBounds.extend(latlng)
+						  $("#adresses_arrivee").append("<li id=\""+value.id+"\">"+value.nom+" - " + value.cp + " " + value.ville + "</li>")
+						});
+						map.fitBounds(markerBounds);
+		  			 	$("#adresses_arrivee").append("</ul>")
+		  			 	$( "#cadre" ).hide(800);
+		  			 	$( "#cadre_depart" ).hide(800);
+		  				$( "#cadre_arrivee" ).show(800);
+		  				$("#adresses_arrivee li").click(function(){
+		  					$("#adresse_arrivee_id").attr('value',$(this).attr('id'));
+		  					clearOverlays();
+		  					getItineraire();
+		  				});
+		  			 }else{
+		  			 	$("#adresse_arrivee_id").attr('value',data[0].id);
+		  			 	getItineraire();
+		  			 }	
+				  }
+		);
+	}
 	function addmarker(latilongi) {
 	    var marker = new google.maps.Marker({
 	        position: latilongi,

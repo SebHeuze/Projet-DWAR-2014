@@ -3,12 +3,13 @@ package com.projetweb.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import javax.annotation.Generated;
 
 import com.google.gson.annotations.Expose;
 import com.projetweb.bean.generated.tan.ArretDepart;
 import com.projetweb.bean.generated.tan.Etape;
 
+@Generated("org.jsonschema2pojo")
 public class ItineraireTanResponse {
 
 @Expose
