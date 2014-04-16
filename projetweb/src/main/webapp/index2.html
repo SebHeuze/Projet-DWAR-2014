@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="css/overcast/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui-timepicker-addon.js"></script>
+    <script src="js/jqueryscript.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Bus VS voiture</title>
+  </head>
+  <body>
+    <div id="header">
+        
+    </div>
+    <div id="container">
+        <div id="map">
+            <p>Veuillez patienter pendant le chargement de la carte...</p>
+        </div>
+        <div id="cadre" class="arrondi">
+          <form class="form-horizontal">
+            <fieldset>
+
+            <!-- Form Name -->
+            <legend class="arronditop">Itinéraire</legend>
+            <div id="fields">
+              <!-- Text input-->
+              <div class="control-group">
+                <label class="control-label" for="adresse_depart">Adresse départ</label>
+                <div class="controls">
+                  <input id="adresse_depart" name="adresse_depart" type="text" placeholder="Rond point de Rennes" class="input-medium" required="">
+                  <input id="adresse_depart_id" type="hidden"/>
+                </div>
+              </div>
+
+              <!-- Text input-->
+              <div class="control-group">
+                <label class="control-label" for="date_depart">Date départ</label>
+                <div class="controls">
+                  <input id="date_depart" name="date_depart" type="text" class="input-medium" required="">
+                </div>
+              </div>
+
+              <!-- Text input-->
+              <div class="control-group">
+                <label class="control-label" for="adresse_arrivee">Adresse arrivée</label>
+                <div class="controls">
+                  <input id="adresse_arrivee" name="adresse_arrivee" type="text" placeholder="Place du cirque" class="input-medium" required="">
+                  <input id="adresse_arrivee_id" type="hidden"/>
+                </div>
+              </div>
+
+               <!-- Text input-->
+              <div class="control-group">
+                <label class="control-label" for="date_retour">Date retour</label>
+                <div class="controls">
+                  <input id="date_retour" name="date_retour" type="text" class="input-medium" required="">
+                </div>
+              </div>
+
+              <!-- Select Basic -->
+              <div class="control-group">
+                <label class="control-label" for="type_voiture">Type voiture</label>
+                <div class="controls">
+                  <select id="type_voiture" name="type_voiture" class="input-medium">
+                    <option>Citadine</option>
+                    <option>Compacte</option>
+                    <option>Familiale</option>
+                    <option>Routière</option>
+                    <option>Luxe</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Select Basic -->
+              <div class="control-group">
+                <label class="control-label" for="carburant">Carburant</label>
+                <div class="controls">
+                  <select id="carburant" name="carburant" class="input-medium">
+                    <option>Essence</option>
+                    <option>Diesel</option>
+                    <option>GPL</option>
+                    <option>Electrique</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Multiple Checkboxes (inline) -->
+              <div class="control-group">
+                <label class="control-label" for="abonnement_tan">Abonnement Tan</label>
+                <div class="controls">
+                  <label class="checkbox inline" for="abonnement_tan-0">
+                    <input type="checkbox" name="abonnement_tan" id="abonnement_tan-0" value="Oui" required="required">
+                    Oui
+                  </label>
+                </div>
+              </div>
+              <br/>
+              <!-- Button -->
+              <div class="control-group">
+                <div class="controls">
+                  <center><button id="singlebutton" name="singlebutton" class="btn btn-primary">Bus ou Voiture ?</button></center>
+                </div>
+              </div>
+            </div>
+            </fieldset>
+            </form>
+          
+        </div>
+        <div id="cadre_depart" style="display:none" class="arrondi">
+          <form class="form-horizontal">
+            <fieldset><legend class="arronditop">Adresse Départ</legend></fieldset>
+            <div id="adresses_depart">
+            </div>
+          </form>
+        </div>
+        <div id="cadre_arrivee" style="display:none" class="arrondi">
+          <form class="form-horizontal">
+            <fieldset><legend class="arronditop">Adresse Arrivée</legend></fieldset>
+            <div id="adresses_arrivee">
+            </div>
+          </form>
+        </div>
+        <div id="cadre_resultat" style="display:none" class="arrondi">
+          <form class="form-horizontal">
+            <fieldset><legend class="arronditop">Résultat</legend></fieldset>
+            <div id="resultat">
+              <div id="meilleur">
+
+              </div>
+              <table>
+                <tr>
+                  <th>Bus</th>
+                  <th>Voiture</th>
+                </tr>
+                <tr>
+                  <td>2.60€</td>
+                  <td>3€</td>
+                </tr>
+                <tr>
+                  <td>5 km</td>
+                  <td>2 km</td>
+                </tr>
+                <tr>
+                  <td>45 min</td>
+                  <td>15 min</td>
+                </tr>
+              </table>
+            </div>
+          </form>
+        </div>
+    </div>
+    <div id="footer">
+        
+    </div>
+    <!-- Include Javascript -->
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+  </body>
+</html>
