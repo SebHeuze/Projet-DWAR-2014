@@ -77,6 +77,11 @@
 	    <property name="serviceDistance" value="${serviceDistance}"/>
 	</bean>
 	
+	<bean id="TarifsParkingsHelper" init-method="init" class="com.projetweb.helper.TarifsParkingsHelper" >
+	    <property name="pathFichierTarifsParkings" value="${pathTarifsParkingsFile}" />
+	    <property name="pathFichierListeEquipements" value="${pathListeParkings}" />
+	</bean>
+	
 	<!--  CONFIGURATION -->
 	<context:property-placeholder
     location="classpath:projetweb.properties" />

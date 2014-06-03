@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 
 public class UtilsHelper {
 
+	
+	
 	/**
 	 *  convert InputStream to String
 	 * @param is
