@@ -131,7 +131,7 @@ public class TarifsParkingsHelper {
 			
 			if(((fin.getTime()-dateTraitement.getTime())/ConstantesHelper.MS_IN_HOUR)<timeBetweenHours){
 				/* Si on part avant le changement de tarif, on cherche le bon tarif et on sort */
-				while(!){
+				while(true){
 					tarifActuel = iterator.next();
 				}
 			} else {

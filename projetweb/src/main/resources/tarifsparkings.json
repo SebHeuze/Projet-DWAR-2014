@@ -217,8 +217,7 @@
 		"jour_debut": 1,
 		"jour_fin": 7,
 		"heure_debut": 8,
-		"heure_fin": 21,
-		"type": "default"
+		"heure_fin": 21
     },
     {
         "categorie": 1001,
@@ -243,8 +242,7 @@
 		"jour_debut": 1,
 		"jour_fin": 7,
 		"heure_debut": 21,
-		"heure_fin": 8,
-		"type": "default"
+		"heure_fin": 8
     },
     {
         "categorie": 1001,
@@ -269,8 +267,7 @@
 		"jour_debut": 1,
 		"jour_fin": 7,
 		"heure_debut": 19,
-		"heure_fin": 8,
-		"type": "default"
+		"heure_fin": 8
     },
     {
         "categorie": 1005,
