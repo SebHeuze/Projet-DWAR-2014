@@ -94,13 +94,17 @@
                 </div>
               </div>
 
-              <!-- Multiple Checkboxes (inline) -->
+              <!-- Multiple Radios (inline) -->
               <div class="control-group">
                 <label class="control-label" for="abonnement_tan">Abonnement Tan</label>
                 <div class="controls">
-                  <label class="checkbox inline" for="abonnement_tan-0">
-                    <input type="checkbox" name="abonnement_tan" id="abonnement_tan-0" value="Oui" required="required">
+                  <label class="radio inline" for="abonnement_tan-0">
+                    <input type="radio" name="abonnement_tan" id="abonnement_tan-0" value="true">
                     Oui
+                  </label>
+                  <label class="radio inline" for="abonnement_tan-1">
+                    <input type="radio" name="abonnement_tan" id="abonnement_tan-1" value="false" checked="checked">
+                    Non
                   </label>
                 </div>
               </div>
@@ -108,7 +112,7 @@
               <!-- Button -->
               <div class="control-group">
                 <div class="controls">
-                  <center><button id="singlebutton" name="singlebutton" class="btn btn-primary">Bus ou Voiture ?</button></center>
+                  <center><button onclick="javascript:return false;"id="singlebutton" name="singlebutton" class="btn btn-primary">Bus ou Voiture ?</button></center>
                 </div>
               </div>
             </div>
