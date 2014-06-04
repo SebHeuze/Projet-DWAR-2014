@@ -1,0 +1,593 @@
+[
+    {
+        "categorie": 1001,
+        "concerne": "default",
+		"tarifs": [
+					{
+						"temps": 0.5,
+						"prix": 1.2,
+						"type": "default"
+					},
+					{
+						"temps": 1,
+						"prix": 2.3,
+						"type": "default"
+					},
+					{
+						"temps": 1.5,
+						"prix": 3.1,
+						"type": "default"
+					},
+					{
+						"temps": 2,
+						"prix": 3.9,
+						"type": "default"
+					},
+					{
+						"temps": 2.5,
+						"prix": 4.5,
+						"type": "default"
+					},
+					{
+						"temps": 3,
+						"prix": 4.9,
+						"type": "default"
+					},
+					{
+						"temps": 3.5,
+						"prix": 5.4,
+						"type": "default"
+					},
+					{
+						"temps": 4,
+						"prix": 5.8,
+						"type": "default"
+					},
+					{
+						"temps": 4.5,
+						"prix": 6.1,
+						"type": "default"
+					},
+					{
+						"temps": 5,
+						"prix": 6.4,
+						"type": "default"
+					},
+					{
+						"temps": 5.5,
+						"prix": 6.8,
+						"type": "default"
+					},
+					{
+						"temps": 6,
+						"prix": 7.1,
+						"type": "default"
+					},
+					{
+						"temps": 6.5,
+						"prix": 7.5,
+						"type": "default"
+					},
+					{
+						"temps": 7,
+						"prix": 8,
+						"type": "default"
+					},
+					{
+						"temps": 7.5,
+						"prix": 8.4,
+						"type": "default"
+					},
+					{
+						"temps": 8,
+						"prix": 8.8,
+						"type": "default"
+					},
+					{
+						"temps": 9,
+						"prix": 9,
+						"type": "default"
+					},
+					{
+						"temps": 10,
+						"prix": 9.5,
+						"type": "default"
+					},
+					{
+						"temps": 11,
+						"prix": 9.9,
+						"type": "default"
+					}
+				  ],
+		"jour_debut": 1,
+		"jour_fin": 7,
+		"heure_debut": 8,
+		"heure_fin": 19
+    },
+	{
+        "categorie": 1001,
+        "concerne": "Parking ouvrage Cité des Congrès",
+		"tarifs": [
+					{
+						"temps": 0.5,
+						"prix": 1.2,
+						"type": "default"
+					},
+					{
+						"temps": 1,
+						"prix": 2.3,
+						"type": "default"
+					},
+					{
+						"temps": 1.5,
+						"prix": 3.1,
+						"type": "default"
+					},
+					{
+						"temps": 2,
+						"prix": 3.9,
+						"type": "default"
+					},
+					{
+						"temps": 2.5,
+						"prix": 4.5,
+						"type": "default"
+					},
+					{
+						"temps": 3,
+						"prix": 4.9,
+						"type": "default"
+					},
+					{
+						"temps": 3.5,
+						"prix": 5.4,
+						"type": "default"
+					},
+					{
+						"temps": 4,
+						"prix": 5.8,
+						"type": "default"
+					},
+					{
+						"temps": 4.5,
+						"prix": 6.1,
+						"type": "default"
+					},
+					{
+						"temps": 5,
+						"prix": 6.4,
+						"type": "default"
+					},
+					{
+						"temps": 5.5,
+						"prix": 6.8,
+						"type": "default"
+					},
+					{
+						"temps": 6,
+						"prix": 7.1,
+						"type": "default"
+					},
+					{
+						"temps": 6.5,
+						"prix": 7.5,
+						"type": "default"
+					},
+					{
+						"temps": 7,
+						"prix": 8,
+						"type": "default"
+					},
+					{
+						"temps": 7.5,
+						"prix": 8.4,
+						"type": "default"
+					},
+					{
+						"temps": 8,
+						"prix": 8.8,
+						"type": "default"
+					},
+					{
+						"temps": 9,
+						"prix": 9,
+						"type": "default"
+					},
+					{
+						"temps": 10,
+						"prix": 9.5,
+						"type": "default"
+					},
+					{
+						"temps": 11,
+						"prix": 9.9,
+						"type": "default"
+					},
+					{
+						"temps": 12,
+						"prix": 10.4,
+						"type": "default"
+					},
+					{
+						"temps": 13,
+						"prix": 11,
+						"type": "default"
+					}
+				  ],
+		"jour_debut": 1,
+		"jour_fin": 7,
+		"heure_debut": 8,
+		"heure_fin": 21
+    },
+    {
+        "categorie": 1001,
+        "concerne": "Parking ouvrage Cité des Congrès",
+		"tarifs": [
+					{
+						"temps": 1,
+						"prix": 1,
+						"type": "default"
+					},
+					{
+						"temps": 2,
+						"prix": 2,
+						"type": "default"
+					},
+					{
+						"temps": 3,
+						"prix": 3,
+						"type": "max"
+					}
+				  ],
+		"jour_debut": 1,
+		"jour_fin": 7,
+		"heure_debut": 21,
+		"heure_fin": 8
+    },
+    {
+        "categorie": 1001,
+        "concerne": "default",
+		"tarifs": [
+					{
+						"temps": 1,
+						"prix": 1,
+						"type": "default"
+					},
+					{
+						"temps": 2,
+						"prix": 2,
+						"type": "default"
+					},
+					{
+						"temps": 3,
+						"prix": 3,
+						"type": "max"
+					}
+				  ],
+		"jour_debut": 1,
+		"jour_fin": 7,
+		"heure_debut": 19,
+		"heure_fin": 8
+    },
+    {
+        "categorie": 1005,
+        "concerne": "default",
+		"tarifs": [
+					{
+						"temps": 0.5,
+						"prix": 1,
+						"type": "default"
+					},
+					{
+						"temps": 1,
+						"prix": 2,
+						"type": "default"
+					},
+					{
+						"temps": 1.5,
+						"prix": 2.8,
+						"type": "default"
+					},
+					{
+						"temps": 2,
+						"prix": 4,
+						"type": "default"
+					},
+					{
+						"temps": 2.5,
+						"prix": 4.8,
+						"type": "default"
+					},
+					{
+						"temps": 3,
+						"prix": 5.8,
+						"type": "default"
+					},
+					{
+						"temps": 3.5,
+						"prix": 6.8,
+						"type": "default"
+					},
+					{
+						"temps": 4,
+						"prix": 7.8,
+						"type": "default"
+					},
+					{
+						"temps": 4.5,
+						"prix": 8.8,
+						"type": "default"
+					},
+					{
+						"temps": 5,
+						"prix": 10,
+						"type": "default"
+					},
+					{
+						"temps": 5.5,
+						"prix": 11,
+						"type": "default"
+					},
+					{
+						"temps": 6,
+						"prix": 12.2,
+						"type": "default"
+					},
+					{
+						"temps": 6.5,
+						"prix": 13.2,
+						"type": "default"
+					},
+					{
+						"temps": 7,
+						"prix": 14.4,
+						"type": "default"
+					},
+					{
+						"temps": 7.5,
+						"prix": 15.4,
+						"type": "default"
+					},
+					{
+						"temps": 8,
+						"prix": 16,
+						"type": "default"
+					},
+					{
+						"temps": 8.5,
+						"prix": 17,
+						"type": "default"
+					},
+					{
+						"temps": 9,
+						"prix": 17.9,
+						"type": "default"
+					},
+					{
+						"temps": 9.5,
+						"prix": 19,
+						"type": "default"
+					},
+					{
+						"temps": 10,
+						"prix": 19.8,
+						"type": "default"
+					},
+					{
+						"temps": 10.5,
+						"prix": 20.9,
+						"type": "default"
+					},
+					{
+						"temps": 11,
+						"prix": 21.8,
+						"type": "default"
+					},
+					{
+						"temps": 11.5,
+						"prix": 23.2,
+						"type": "default"
+					},
+					{
+						"temps": 12,
+						"prix": 24.3,
+						"type": "default"
+					}
+				  ],
+		"jour_debut": 1,
+		"jour_fin": 6,
+		"heure_debut": 8,
+		"heure_fin": 20
+    },
+	{
+        "categorie": 1005,
+        "concerne": "default",
+		"tarifs": [
+					{
+						"temps": 1,
+						"prix": 0.8,
+						"type": "default"
+					},
+					{
+						"temps": 2,
+						"prix": 1.6,
+						"type": "default"
+					},
+					{
+						"temps": 3,
+						"prix": 2.2,
+						"type": "max"
+					}
+				  ],
+		"jour_debut": 1,
+		"jour_fin": 6,
+		"heure_debut": 20,
+		"heure_fin": 8
+    },
+	{
+        "categorie": 1005,
+        "concerne": "default",
+		"tarifs": [
+					{
+						"temps": 1,
+						"prix": 0.8,
+						"type": "linear"
+					}
+				  ],
+		"jour_debut": 7,
+		"jour_fin": 7,
+		"heure_debut": 8,
+		"heure_fin": 20
+    }, 
+	{
+        "categorie": 1005,
+        "concerne": "Parc en enclos Bellamy",
+		"tarifs": [
+					{
+						"temps": 0.5,
+						"prix": 1,
+						"type": "linear"
+					}
+				  ],
+		"jour_debut": 1,
+		"jour_fin": 4,
+		"heure_debut": 6,
+		"heure_fin": 20
+    },
+    {
+        "categorie": 1005,
+        "concerne": "Parc en enclos Bellamy",
+		"tarifs": [
+					{
+						"temps": 1,
+						"prix": 0.8,
+						"type": "default"
+					},
+					{
+						"temps": 2,
+						"prix": 1.6,
+						"type": "default"
+					},
+					{
+						"temps": 3,
+						"prix": 2.2,
+						"type": "max"
+					}
+				  ],
+		"jour_debut": 1,
+		"jour_fin": 4,
+		"heure_debut": 20,
+		"heure_fin": 6
+    },	
+    {
+        "categorie": 1005,
+        "concerne": "Parc en enclos Bellamy",
+		"tarifs": [
+					{
+						"temps": 0.5,
+						"prix": 1,
+						"type": "linear"
+					}
+				  ],
+		"jour_debut": 5,
+		"jour_fin": 6,
+		"heure_debut": 14.5,
+		"heure_fin": 20
+    },
+    {
+        "categorie": 1005,
+        "concerne": "Parc en enclos Bellamy",
+		"tarifs": [
+					{
+						"temps": 0.5,
+						"prix": 4.4,
+						"type": "closed"
+					}
+				  ],
+		"jour_debut": 5,
+		"jour_fin": 6,
+		"heure_debut": 6,
+		"heure_fin": 14.5
+    },
+    {
+        "categorie": 1005,
+        "concerne": "Parc en enclos Bellamy",
+		"tarifs": [
+					{
+						"temps": 1,
+						"prix": 0.8,
+						"type": "default"
+					},
+					{
+						"temps": 2,
+						"prix": 1.6,
+						"type": "default"
+					},
+					{
+						"temps": 3,
+						"prix": 2.2,
+						"type": "max"
+					}
+				  ],
+		"jour_debut": 5,
+		"jour_fin": 6,
+		"heure_debut": 20,
+		"heure_fin": 6
+    },
+    {
+        "categorie": 1005,
+        "concerne": "Parc en enclos Bellamy",
+		"tarifs": [
+					{
+						"temps": 0.5,
+						"prix": 4.4,
+						"type": "closed"
+					}
+				  ],
+		"jour_debut": 7,
+		"jour_fin": 7,
+		"heure_debut": 14.5,
+		"heure_fin": 20
+    },
+    {
+        "categorie": 1005,
+        "concerne": "Parc en enclos Bellamy",
+		"tarifs": [
+					{
+						"temps": 1,
+						"prix": 0.8,
+						"type": "default"
+					},
+					{
+						"temps": 2,
+						"prix": 1.6,
+						"type": "default"
+					},
+					{
+						"temps": 3,
+						"prix": 2.2,
+						"type": "max"
+					}
+				  ],
+		"jour_debut": 7,
+		"jour_fin": 7,
+		"heure_debut": 20,
+		"heure_fin": 6
+    },
+    {
+        "categorie": 1005,
+        "concerne": "Parc en enclos Bellamy",
+		"tarifs": [
+					{
+						"temps": 0.5,
+						"prix": 4.4,
+						"type": "closed"
+					}
+				  ],
+		"jour_debut": 7,
+		"jour_fin": 7,
+		"heure_debut": 6,
+		"heure_fin": 14.5
+    }
+
+]
