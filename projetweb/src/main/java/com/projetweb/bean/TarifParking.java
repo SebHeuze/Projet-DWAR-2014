@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
 @PersistenceCapable
-public class TarifParking {
+public class TarifParking implements Comparable<TarifParking>{
 
 @PrimaryKey
 @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -44,7 +44,7 @@ private Integer jour_fin;
 
 @Expose
 @Persistent
-private Integer heure_debut;
+private Double heure_debut;
 
 @Expose
 @Persistent
@@ -102,11 +102,11 @@ public void setJour_fin(Integer jour_fin) {
 this.jour_fin = jour_fin;
 }
 
-public Integer getHeure_debut() {
+public Double getHeure_debut() {
 return heure_debut;
 }
 
-public void setHeure_debut(Integer heure_debut) {
+public void setHeure_debut(Double heure_debut) {
 this.heure_debut = heure_debut;
 }
 
@@ -124,6 +124,11 @@ return type;
 
 public void setType(String type) {
 this.type = type;
+}
+
+@Override
+public int compareTo(TarifParking o) {
+	return (int)((heure_debut + jour_debut*100) - (o.heure_debut + o.jour_debut*100));
 }
 
 }
