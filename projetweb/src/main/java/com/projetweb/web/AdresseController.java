@@ -61,8 +61,9 @@ public class AdresseController {
 	 * @return la liste d'adresse au format JSON
 	 */
 	@RequestMapping(value="/itineraire", method = RequestMethod.POST)
-	public @ResponseBody BusVsVoiture findItineraire(@RequestParam String idAdresseDepart, @RequestParam String idAdresseArrivee, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date dateDepart, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date dateRetour, @RequestParam String typeVoiture, @RequestParam String carburant, @RequestParam boolean abonnementTan) {
-		LOG.info("AdresseController::findItineraire Début appel controlleur");
+	public @ResponseBody BusVsVoiture findItineraire(@RequestParam String idAdresseDepart, @RequestParam String idAdresseArrivee, @RequestParam @DateTimeFormat(pattern="dd/MM/yyyy HH:mm") Date dateDepart, @RequestParam @DateTimeFormat(pattern="dd/MM/yyyy HH:mm") Date dateRetour, @RequestParam String typeVoiture, @RequestParam String carburant, @RequestParam boolean abonnementTan, HttpServletRequest req, HttpServletResponse res) {
+		res.setHeader("Access-Control-Allow-Origin", "*");
+		LOG.info("AdresseController::findItineraire Début appel controlleur findItineraire");
 		BusVsVoiture busVsVoiture= adresseService.findItineraire(idAdresseDepart, idAdresseArrivee, dateDepart, dateRetour, typeVoiture, carburant, abonnementTan);
 		
 		return busVsVoiture;
