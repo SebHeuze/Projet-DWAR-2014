@@ -12,19 +12,21 @@ import com.google.appengine.api.datastore.Key;
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class Arret {
 	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key key;
+	private String id;
 
 	@Persistent
-	private float coordX;
+	@SerializedName("nom")
+	private String nom;
+	
+	@Persistent(serialized = "true")
+	@SerializedName("coord")
+	private Coordonnee coord;
 
-	@Persistent
-	private float coordY;
 
-
-	public Arret(float coordx, float coordy) {
-		this.coordX = coordx;
-		this.coordY = coordy;
+	public Arret(String id, String nom, float coordx, float coordy) {
+		this.id = id;
+		this.nom = nom;
+		this.coord = new Coordonnee(x, y);
 	}
 
 	public Key getKey() {
