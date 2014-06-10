@@ -88,53 +88,38 @@ initialize = function() {
 
 function setDirections() {
 	
-	/*var wayptsbus = [];
-	wayptsbus.push(new google.maps.LatLng(47.231730, -1.538032));
-	wayptsbus.push(new google.maps.LatLng(47.227317, -1.542322));
-	wayptsbus.push(new google.maps.LatLng(47.221826, -1.542585));
-	wayptsbus.push(new google.maps.LatLng(47.218631, -1.538771));
-	
-	busPath.setPath(wayptsbus);
-	
 	var wayptsvoiture = [];
-	wayptsvoiture.push(new google.maps.LatLng(47.241430, -1.538032));
-	wayptsvoiture.push(new google.maps.LatLng(47.247417, -1.542322));
-	wayptsvoiture.push(new google.maps.LatLng(47.241426, -1.542585));
-	wayptsvoiture.push(new google.maps.LatLng(47.248431, -1.538771));
-	
-	drivingPath.setPath(wayptsvoiture);*/
-	var waypts = [];
-	waypts.push({
-        location:"47.231730, -1.538032",
+	wayptsvoiture.push({
+        location:new google.maps.LatLng(47.231730, -1.538032),
         stopover:true});
-	waypts.push({
-        location:"47.227317, -1.542322",
+	wayptsvoiture.push({
+        location:new google.maps.LatLng(47.227317, -1.542322),
         stopover:true});
-	waypts.push({
-        location:"47.221826, -1.542585",
+	wayptsvoiture.push({
+        location:new google.maps.LatLng(47.221826, -1.542585),
         stopover:true});
-	waypts.push({
-        location:"47.218631, -1.538771",
+	wayptsvoiture.push({
+        location:new google.maps.LatLng(47.218631, -1.538771),
         stopover:true});
 	
-	var waypts1 = [];
-	waypts1.push({
-        location:"47.241730, -1.538032",
+	var wayptsbus = [];
+	wayptsbus.push({
+        location:new google.maps.LatLng(47.241730, -1.538032),
         stopover:true});
-	waypts1.push({
-        location:"47.247317, -1.542322",
+	wayptsbus.push({
+        location:new google.maps.LatLng(47.247317, -1.542322),
         stopover:true});
-	waypts1.push({
-        location:"47.241826, -1.542585",
+	wayptsbus.push({
+        location:new google.maps.LatLng(47.241826, -1.542585),
         stopover:true});
-	waypts1.push({
-        location:"47.248631, -1.538771",
+	wayptsbus.push({
+        location:new google.maps.LatLng(47.248631, -1.538771),
         stopover:true});
 	
 	var request = {
 		      origin: "47.234400, -1.535497",
 		      destination: "47.215921, -1.534976",
-		      waypoints: waypts,
+		      waypoints: wayptsvoiture,
 		      optimizeWaypoints: true,
 		      travelMode: google.maps.TravelMode.DRIVING
 		  };
@@ -142,7 +127,7 @@ function setDirections() {
 	var request1 = {
 		      origin: "47.234400, -1.535497",
 		      destination: "47.215921, -1.534976",
-		      waypoints: waypts1,
+		      waypoints: wayptsbus,
 		      optimizeWaypoints: true,
 		      travelMode: google.maps.TravelMode.DRIVING
 		  };
@@ -152,11 +137,18 @@ function setDirections() {
 	      directionsDisplay.setDirections(response);
 	  }});
 	
+	
 	directionsService.route(request1, function(response, status) {
 	    if (status == google.maps.DirectionsStatus.OK) {
 	      directionsDisplay1.setDirections(response);
 	  }});
-	createMarker(directionsDisplay.getMap(),new google.maps.LatLng(47.2173, -1.5534),"Tiltesf","markersome text for marker <br>","B");
+	createMarker(directionsDisplay.getMap(),new google.maps.LatLng(47.234400, -1.535497),"Tiltesf","markersome text for marker <br>","A");
+	var markerletter = "B".charCodeAt(0);
+	wayptsvoiture.forEach(function(entry){
+		createMarker(directionsDisplay.getMap(),entry.location,"Tiltesf","markersome text for marker <br>",String.fromCharCode(markerletter));
+		markerletter += 1;
+	});
+	createMarker(directionsDisplay.getMap(),new google.maps.LatLng(47.215921, -1.534976),"Tiltesf","markersome text for marker <br>",String.fromCharCode(markerletter));
 }
 
 function getMarkerImage(iconStr) {
