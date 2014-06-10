@@ -24,7 +24,7 @@
 		<context:exclude-filter type="regex"
 			expression="com.projetweb.web.Adresse.*" />
 			<context:exclude-filter type="regex"
-			expression="com.projetweb.web.Cron.*" />
+			expression="com.projetweb.web.Admin.*" />
 	</context:component-scan>
  
 	<mvc:annotation-driven />
@@ -35,7 +35,7 @@
 	<!-- Bean to show you Di in GAE, via Spring, also init the MovieController -->
 	<bean class="com.projetweb.web.AdresseController">
 	</bean>
- 	<bean class="com.projetweb.web.CronController">
+	<bean class="com.projetweb.web.AdminController">
 	</bean>
 	
 	<bean
@@ -50,16 +50,17 @@
 	
 	<bean id="AdresseService" class="com.projetweb.service.impl.AdresseServiceImpl" >
 	</bean>
-	
-	<bean id="CronService" class="com.projetweb.service.impl.CronServiceImpl" >
-		<property name="urlEquipementMobilite" value="${urlEquipementMobilite}"/>
-		<property name="pathTarifParkingFile" value="${pathTarifParkingFile}"/>
+	<bean id="AdminService" class="com.projetweb.service.impl.AdminServiceImpl" >
 	</bean>
 	
 	
 	<bean id="AdresseDAO" class="com.projetweb.dao.impl.AdresseDAOImpl"	scope="singleton">
 	</bean>
-	<bean id="TarifParkingDAO" class="com.projetweb.dao.impl.TarifParkingDAOImpl"	scope="singleton">
+	<bean id="StopDAO" class="com.projetweb.dao.impl.StopDAOImpl"	scope="singleton">
+		<property name="pathFichierStops" value="${pathFichierStops}" />
+	</bean>
+	<bean id="TrajetBusDAO" class="com.projetweb.dao.impl.TrajetBusDAOImpl"	scope="singleton">
+		<property name="pathFichierTrajetBus" value="${pathFichierTrajets}" />
 	</bean>
 	<bean id="EquipementDAO" class="com.projetweb.dao.impl.EquipementDAOImpl"	scope="singleton">
 	</bean>
@@ -77,10 +78,12 @@
 	    <property name="serviceDistance" value="${serviceDistance}"/>
 	</bean>
 	
+ 	
 	<bean id="TarifsParkingsHelper" init-method="init" class="com.projetweb.helper.TarifsParkingsHelper" >
-	    <property name="pathFichierTarifsParkings" value="${pathTarifsParkingsFile}" />
+	    <property name="pathFichierTarifsParkings" value="${pathTarifsParkings}" />
 	    <property name="pathFichierListeEquipements" value="${pathListeParkings}" />
-	</bean>
+	    <property name="categoriesParkings" value="${categoriesParkings}" />
+ 	</bean>
 	
 	<!--  CONFIGURATION -->
 	<context:property-placeholder

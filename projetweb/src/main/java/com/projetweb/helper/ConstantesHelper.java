@@ -15,7 +15,11 @@ public class ConstantesHelper {
 	public static final long S_IN_MINUTE = 60;
 	//Nombre de Mètres dans un km pour les conversion
 	public static final long M_IN_KM = 1000;
+	//Nombre de minutes dans une heure
+	public static final int MINUTE_IN_HOUR = 60;
 	
 	//Délai d'expiration ticket TAN en heure
 	public static final long EXPIRATION_TICKET_TAN = 1;
+	public static final String SHAPE_DEPART = "1";
+	
 }

@@ -99,10 +99,6 @@ public class Equipement {
 	@Expose
 	private Integer categorie;
 	
-	
-	public Equipement(){
-		
-	}
 
 	public void update() {
 		this.name = geo.getName();

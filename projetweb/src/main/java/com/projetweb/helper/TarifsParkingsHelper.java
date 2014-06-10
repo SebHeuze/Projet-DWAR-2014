@@ -1,6 +1,7 @@
 package com.projetweb.helper;
 
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,14 +9,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.view.InternalResourceView;
 
+import com.google.appengine.api.log.LogService.LogLevel;
 import com.google.gson.Gson;
 import com.projetweb.bean.Coordonnee;
 import com.projetweb.bean.Equipement;
+import com.projetweb.bean.ListeEquipementsAPIReponse;
+import com.projetweb.bean.Tarif;
 import com.projetweb.bean.TarifParking;
 
 public class TarifsParkingsHelper {
@@ -30,8 +37,10 @@ public class TarifsParkingsHelper {
 	
 	private static List<String> listeCategoriesParkings;
 	
- 	@Autowired
-	private static ServletContext servletContext;
+	/**
+	 * Logger
+	 */
+	private final static Logger LOG = Logger.getLogger(TarifsParkingsHelper.class.getName());
 	
  	/**
  	 * Initialisation du helper avec les tarifs parkings et les équipements
@@ -47,10 +56,15 @@ public class TarifsParkingsHelper {
  		listeTarifsParkings = new HashMap<Integer, HashMap<String, TreeSet<TarifParking>>>();
  		listeEquipements = new HashMap<String, Equipement>();
  		
- 		InputStream  tarifsStream = servletContext.getResourceAsStream(pathFichierTarifsParkings);
+ 		InputStream  tarifsStream = TarifsParkingsHelper.class.getResourceAsStream(pathFichierTarifsParkings);
  		String tarifsString = UtilsHelper.getStringFromInputStream(tarifsStream);
  		
- 		TarifParking[] arrayTarifsParkings  = (TarifParking[]) gson.fromJson(tarifsString, TarifParking[].class);
+ 		TarifParking[] arrayTarifsParkings = null;
+ 		try{
+ 			arrayTarifsParkings  = (TarifParking[]) gson.fromJson(tarifsString, TarifParking[].class);
+ 		} catch (Exception e){
+ 			LOG.log(Level.SEVERE, "Erreur lors de la conversion JSON vers TarifParkings[]", e);
+ 		}
  		
  		for (TarifParking tarifP : arrayTarifsParkings){
  			if (!listeTarifsParkings.containsKey(tarifP.getCategorie())){
@@ -66,13 +80,20 @@ public class TarifsParkingsHelper {
  		
  		/* Initialisation des équipements (filtrés par categorie)*/
  		
- 		InputStream  equipementsStream = servletContext.getResourceAsStream(pathFichierListeEquipements);
+ 		InputStream  equipementsStream = TarifsParkingsHelper.class.getResourceAsStream(pathFichierListeEquipements);
  		String EquipementsString = UtilsHelper.getStringFromInputStream(equipementsStream);
  		
- 		Equipement[] arrayEquipements  = (Equipement[]) gson.fromJson(EquipementsString, Equipement[].class);
+ 		ListeEquipementsAPIReponse listeEquipementsAPIReponse = null;
+ 		try{
+ 			listeEquipementsAPIReponse  = (ListeEquipementsAPIReponse) gson.fromJson(EquipementsString, ListeEquipementsAPIReponse.class);
+ 		} catch (Exception e) {
+ 			LOG.log(Level.SEVERE, "Erreur lors de la conversion JSON vers Equipement[]", e);
+ 		}
  		
- 		for (Equipement equipement : arrayEquipements){
+ 		
+ 		for (Equipement equipement : listeEquipementsAPIReponse.getData()){
  			if(listeCategoriesParkings.contains(String.valueOf(equipement.getCategorie()))){
+ 				equipement.update();
  				listeEquipements.put(equipement.getGeo().getName(), equipement);
  			}
  		}
@@ -84,8 +105,8 @@ public class TarifsParkingsHelper {
  	 * @param fin
  	 * @return
  	 */
-	public float calculerCoutParking(Date debut, Date fin, Coordonnee maPosition){
-		Equipement parkingProche = this.trouverParkingLePlusProche(maPosition);
+	public static float calculerCoutParking(Date debut, Date fin, Coordonnee maPosition){
+		Equipement parkingProche = trouverParkingLePlusProche(maPosition);
 		
 		return prixParking(debut, fin, parkingProche);
 	}
@@ -95,7 +116,7 @@ public class TarifsParkingsHelper {
 	 * @param parkingProche
 	 * @return
 	 */
-	private float prixParking(Date debut, Date fin, Equipement parkingProche) {
+	private static float prixParking(Date debut, Date fin, Equipement parkingProche) {
 		TreeSet<TarifParking> tarifsParking;
 		float coutParking = 0;
 		
@@ -111,35 +132,66 @@ public class TarifsParkingsHelper {
 		Date dateTraitement = debut;
 		cal.setTime(dateTraitement);
 		double timeBetweenHours = 0;
+		double tempsStationnementRestant = 0;
+		double nombreHeureStationnementCreneau = 0;
+		boolean continuer = true;
 		
-		Iterator<TarifParking> iterator = tarifsParking.iterator();
-		TarifParking tarifActuel = iterator.next();
 		
-		while (dateTraitement.before(fin)){
+		while (continuer){
+			/* Initialisation de l'iterateur */
+			Iterator<TarifParking> iterator = tarifsParking.iterator();
+			TarifParking tarifActuel = iterator.next();
+			
 			/* les tarifs par jour */
-			while(!UtilsHelper.betweenDay(tarifActuel.getJour_debut(), tarifActuel.getJour_fin(), cal.get(Calendar.DAY_OF_MONTH))){
+			while(!UtilsHelper.betweenDay(tarifActuel.getJour_debut(), tarifActuel.getJour_fin(), cal.get(Calendar.DAY_OF_WEEK)-1)){
 				tarifActuel = iterator.next();
 			}
 			
 			/* on parcours ensuite les tarifs par heure */
-			while(!UtilsHelper.betweenHour(tarifActuel.getHeure_debut(), tarifActuel.getHeure_fin(), cal.get(Calendar.HOUR_OF_DAY))){
+			double heureExacte = ((double) cal.get(Calendar.HOUR_OF_DAY))+((double)cal.get(Calendar.MINUTE)/ConstantesHelper.MINUTE_IN_HOUR);
+			while(!UtilsHelper.betweenHour(tarifActuel.getHeure_debut(), tarifActuel.getHeure_fin(), heureExacte)){
 				tarifActuel = iterator.next();
 			}
 			
 			/* On a maintenant le tarif applicable à cette heure */
 			timeBetweenHours = UtilsHelper.substract_hour(tarifActuel.getHeure_fin(), tarifActuel.getHeure_debut());
+			tempsStationnementRestant = ((double)(fin.getTime()-dateTraitement.getTime())/ConstantesHelper.MS_IN_HOUR);
 			
-			if(((fin.getTime()-dateTraitement.getTime())/ConstantesHelper.MS_IN_HOUR)<timeBetweenHours){
+			if(tempsStationnementRestant<timeBetweenHours){
 				/* Si on part avant le changement de tarif, on cherche le bon tarif et on sort */
-				while(true){
-					tarifActuel = iterator.next();
-				}
+				nombreHeureStationnementCreneau = tempsStationnementRestant;
+				continuer = false;
+
 			} else {
 				/* Sinon on prend le tarif max pour cette plage horaire et on passe au suivant */
+				/* Nombre d'heures avant le creneau suivant */
+				nombreHeureStationnementCreneau = UtilsHelper.substract_hour(tarifActuel.getHeure_fin(),cal.get(Calendar.HOUR_OF_DAY)+(cal.get(Calendar.MINUTE)/ConstantesHelper.MINUTE_IN_HOUR));
+
 			}
+			
+			for(Tarif tarif : tarifActuel.getTarifs()){
+				if(tarif.getTemps()>=nombreHeureStationnementCreneau){
+					coutParking += tarif.getPrix();
+					break;
+				} else if (tarif.getType().equals("linear") || tarif.getType().equals("closed")) {
+					int nbCreneaux = (int) Math.ceil(nombreHeureStationnementCreneau/tarif.getTemps());
+					coutParking += nbCreneaux * tarif.getPrix();
+					break;
+				} else if (tarif.getType().equals("max")) {
+					coutParking += tarif.getPrix();
+					break;
+				}
+			}
+			
+			//On avance sur le prochain créneau tarif.
+			cal.add(Calendar.HOUR, (int) nombreHeureStationnementCreneau);
+			cal.add(Calendar.MINUTE,(int) ((nombreHeureStationnementCreneau - (int)nombreHeureStationnementCreneau)*ConstantesHelper.MINUTE_IN_HOUR));
+			dateTraitement = cal.getTime();
+			
 		}
 		
-		return coutParking;
+		//Résolution problème de précision java, ou quand 2.3 + 2.4 ne font pas 4.7, narmol
+		return (float) (Math.round(coutParking*100.0)/100.0);
 	}
 
 	/**
@@ -147,7 +199,7 @@ public class TarifsParkingsHelper {
 	 * @param maPosition
 	 * @return
 	 */
-	private Equipement trouverParkingLePlusProche(Coordonnee maPosition) {
+	private static Equipement trouverParkingLePlusProche(Coordonnee maPosition) {
 		Equipement parkingProche = null;
 		double distanceTmp;
 		double distance = -1;
@@ -189,6 +241,35 @@ public class TarifsParkingsHelper {
 	 */
 	public static void setPathFichierTarifsParkings(String pathFichierTarifsParkings) {
 		TarifsParkingsHelper.pathFichierTarifsParkings = pathFichierTarifsParkings;
+	}
+
+	/**
+	 * @return the listeCategoriesParkings
+	 */
+	public static List<String> getListeCategoriesParkings() {
+		return listeCategoriesParkings;
+	}
+
+	/**
+	 * @param listeCategoriesParkings the listeCategoriesParkings to set
+	 */
+	public static void setListeCategoriesParkings(
+			List<String> listeCategoriesParkings) {
+		TarifsParkingsHelper.listeCategoriesParkings = listeCategoriesParkings;
+	}
+
+	/**
+	 * @return the categoriesParkings
+	 */
+	public static String getCategoriesParkings() {
+		return categoriesParkings;
+	}
+
+	/**
+	 * @param categoriesParkings the categoriesParkings to set
+	 */
+	public static void setCategoriesParkings(String categoriesParkings) {
+		TarifsParkingsHelper.categoriesParkings = categoriesParkings;
 	}
 	
 	

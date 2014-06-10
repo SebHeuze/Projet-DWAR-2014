@@ -1,6 +1,7 @@
 package com.projetweb.service.impl;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static com.projetweb.helper.ConstantesHelper.HEURE_FORMAT_TAN;
 import static com.projetweb.helper.ConstantesHelper.MS_IN_MINUTE;
 import static com.projetweb.helper.ConstantesHelper.S_IN_MINUTE;
-import static com.projetweb.helper.ConstantesHelper.M_IN_KM;
 
 import com.projetweb.bean.Adresse;
 import com.projetweb.bean.BusVsVoiture;
@@ -21,6 +21,8 @@ import com.projetweb.bean.Coordonnee;
 import com.projetweb.bean.DistanceGoogleResponse;
 import com.projetweb.bean.ItineraireTanResponse;
 import com.projetweb.dao.AdresseDAO;
+import com.projetweb.dao.StopDAO;
+import com.projetweb.helper.TarifsParkingsHelper;
 import com.projetweb.service.AdresseService;
 import com.projetweb.service.GoogleWebService;
 import com.projetweb.service.TanWebService;
@@ -46,10 +48,18 @@ public class AdresseServiceImpl implements AdresseService{
 	private AdresseDAO adresseDAO;
 	
 	/**
+	 * Gestionnaire Stops en base
+	 */
+	@Autowired
+	private StopDAO stopDAO;
+	
+	/**
 	 * Logger
 	 */
-	private final static Logger LOG = Logger.getLogger(AdresseServiceImpl.class.getName());
+	private static final Logger LOG = Logger.getLogger(AdresseServiceImpl.class.getName());
 
+
+	
 	@Override
 	public List<Adresse> findAdressesWithCoord(String adresse) {
 		List<Adresse> listeAdresse = tanWebService.findAdresses(adresse);
@@ -90,6 +100,7 @@ public class AdresseServiceImpl implements AdresseService{
 		Date heureArriveeAller = new Date();
 		Date heureDepartRetour = new Date();
 		Date heureArriveeRetour = new Date();
+		
 		try {
 			heureDepartAller = HEURE_FORMAT_TAN.parse(itineraireDepartTanResponse[0].getHeureDepart());
 			heureArriveeAller = HEURE_FORMAT_TAN.parse(itineraireDepartTanResponse[0].getHeureArrivee());
@@ -99,6 +110,15 @@ public class AdresseServiceImpl implements AdresseService{
 			LOG.log(Level.SEVERE, "AdresseServiceImpl::findItineraire Erreur lors de la conversion de des heures de départ et d'arrivé", e);
 		}
 		
+		//TODO : Faire le cout de l'essence également
+		int tempsAller = (int) (distanceDepartGoogleResponse.getRows().get(0).getElements().get(0).getDuration().getValue()/S_IN_MINUTE);
+		int tempsRetour = (int) (distanceRetourGoogleResponse.getRows().get(0).getElements().get(0).getDuration().getValue()/S_IN_MINUTE);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dateDepart);
+		
+		//On ajoute le temps d'aller au parking à la date de départ pour le calcul
+		cal.add(Calendar.MINUTE, tempsAller);
+		float coutVoiture = TarifsParkingsHelper.calculerCoutParking(cal.getTime(), dateRetour, adresseArrivee.getCoord());
 		
 		//Initialisation de l'objet réponse
 		BusVsVoiture busVsVoiture = new BusVsVoiture(adresseDepart, adresseArrivee);
@@ -113,9 +133,9 @@ public class AdresseServiceImpl implements AdresseService{
 		busVsVoiture.getTrajetBus().setDistanceRetour(0);
 		
 		//TRAJET VOITURE
-		busVsVoiture.getTrajetVoiture().setCout(0);
-		busVsVoiture.getTrajetVoiture().setTempsAller((int) (distanceDepartGoogleResponse.getRows().get(0).getElements().get(0).getDuration().getValue()/S_IN_MINUTE));
-		busVsVoiture.getTrajetVoiture().setTempsRetour((int) (distanceRetourGoogleResponse.getRows().get(0).getElements().get(0).getDuration().getValue()/S_IN_MINUTE));
+		busVsVoiture.getTrajetVoiture().setCout(coutVoiture);
+		busVsVoiture.getTrajetVoiture().setTempsAller(tempsAller);
+		busVsVoiture.getTrajetVoiture().setTempsRetour(tempsRetour);
 		busVsVoiture.getTrajetVoiture().setDistanceAller(distanceDepartGoogleResponse.getRows().get(0).getElements().get(0).getDistance().getValue());
 		busVsVoiture.getTrajetVoiture().setDistanceRetour(distanceRetourGoogleResponse.getRows().get(0).getElements().get(0).getDistance().getValue());
 		

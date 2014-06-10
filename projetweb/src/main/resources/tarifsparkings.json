@@ -441,6 +441,31 @@
     }, 
 	{
         "categorie": 1005,
+        "concerne": "default",
+		"tarifs": [
+					{
+						"temps": 1,
+						"prix": 0.8,
+						"type": "default"
+					},
+					{
+						"temps": 2,
+						"prix": 1.6,
+						"type": "default"
+					},
+					{
+						"temps": 3,
+						"prix": 2.2,
+						"type": "max"
+					}
+				  ],
+		"jour_debut": 7,
+		"jour_fin": 7,
+		"heure_debut": 20,
+		"heure_fin": 8
+    },
+	{
+        "categorie": 1005,
         "concerne": "Parc en enclos Bellamy",
 		"tarifs": [
 					{

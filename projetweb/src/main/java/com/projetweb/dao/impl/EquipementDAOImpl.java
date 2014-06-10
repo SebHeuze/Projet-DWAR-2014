@@ -8,12 +8,8 @@ import javax.jdo.annotations.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.projetweb.PMF;
-import com.projetweb.bean.Adresse;
 import com.projetweb.bean.Equipement;
-import com.projetweb.bean.TarifParking;
-import com.projetweb.dao.AdresseDAO;
 import com.projetweb.dao.EquipementDAO;
-import com.projetweb.dao.TarifParkingDAO;
 
 @Repository
 public class EquipementDAOImpl implements EquipementDAO {

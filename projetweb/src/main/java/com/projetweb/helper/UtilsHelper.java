@@ -54,9 +54,9 @@ public class UtilsHelper {
 	 */
 	public static boolean betweenHour(double start, double end, double hour){
 		if (end<start){
-			return ((hour>start && hour>end) || (hour<start && hour<end));
+			return ((hour>=start && hour>=end) || (hour<=start && hour<=end));
 		} else {
-			return (hour>start && hour<end);
+			return (hour>=start && hour<=end);
 		}
 	}
 	
@@ -67,11 +67,14 @@ public class UtilsHelper {
 	 * @param time
 	 * @return
 	 */
-	public static boolean betweenDay(double start, double end, double day){
+	public static boolean betweenDay(int start, int end, int day){
+		if(day==0){
+			day=7;
+		}
 		if (end<start){
 			return ((day>=start && day>=end) || (day<=start && day<=end));
 		} else {
-			return (start<day && day<end);
+			return (start<=day && day<=end);
 		}
 	}
 	
