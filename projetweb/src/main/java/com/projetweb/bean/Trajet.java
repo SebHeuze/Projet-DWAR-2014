@@ -1,5 +1,7 @@
 package com.projetweb.bean;
 
+import java.util.List;
+
 public class Trajet {
 
 	/**
@@ -27,6 +29,11 @@ public class Trajet {
 	 */
 	private int tempsRetour;
 
+	/**
+	 * Liste de coordonnées
+	 */
+	private List<Waypoint> listeWaypoints;
+	
 	/**
 	 * @return the cout
 	 */
@@ -95,6 +102,20 @@ public class Trajet {
 	 */
 	public void setTempsRetour(int tempsRetour) {
 		this.tempsRetour = tempsRetour;
+	}
+
+	/**
+	 * @return the listeWaypoints
+	 */
+	public List<Waypoint> getListeWaypoints() {
+		return listeWaypoints;
+	}
+
+	/**
+	 * @param listeWaypoints the listeWaypoints to set
+	 */
+	public void setListeWaypoints(List<Waypoint> listeWaypoints) {
+		this.listeWaypoints = listeWaypoints;
 	}
 
 	

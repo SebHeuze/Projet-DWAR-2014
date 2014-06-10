@@ -1,6 +1,7 @@
 package com.projetweb.service.impl;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -20,8 +21,12 @@ import com.projetweb.bean.BusVsVoiture;
 import com.projetweb.bean.Coordonnee;
 import com.projetweb.bean.DistanceGoogleResponse;
 import com.projetweb.bean.ItineraireTanResponse;
+import com.projetweb.bean.Stop;
+import com.projetweb.bean.Waypoint;
+import com.projetweb.bean.generated.tan.Etape;
 import com.projetweb.dao.AdresseDAO;
 import com.projetweb.dao.StopDAO;
+import com.projetweb.dao.TrajetBusDAO;
 import com.projetweb.helper.TarifsParkingsHelper;
 import com.projetweb.service.AdresseService;
 import com.projetweb.service.GoogleWebService;
@@ -52,6 +57,12 @@ public class AdresseServiceImpl implements AdresseService{
 	 */
 	@Autowired
 	private StopDAO stopDAO;
+	
+	/**
+	 * Gestionnaire Trajets bus en base
+	 */
+	@Autowired
+	private TrajetBusDAO trajetBusDAO;
 	
 	/**
 	 * Logger
@@ -123,11 +134,49 @@ public class AdresseServiceImpl implements AdresseService{
 		//Initialisation de l'objet réponse
 		BusVsVoiture busVsVoiture = new BusVsVoiture(adresseDepart, adresseArrivee);
 		
+		//////////////////////////////////////////
+		//Récupération des points de passage Bus//
+		//////////////////////////////////////////
+		List<Waypoint> listeWaypointsBus = new ArrayList<Waypoint>();
+		listeWaypointsBus.add(new Waypoint(adresseDepart.getCoord(),adresseDepart.getNom(),"Départ"));
+		
+		for(Etape etape : itineraireDepartTanResponse[0].getEtapes()){
+			Stop arretStop = stopDAO.findStopByName(etape.getArretStop().getLibelle());
+			if(etape.getLigne()==null){
+				//Alors on marche
+				if (arretStop!=null){
+					Waypoint waypoint = new Waypoint(new Coordonnee(arretStop.getStop_lat(), arretStop.getStop_lon()),arretStop.getStop_name(),"Description");
+					listeWaypointsBus.add(waypoint);
+				} else {
+					LOG.log(Level.SEVERE, "AdresseServiceImpl::findItineraire Aucun arrêt correspondant");
+				}
+			} else {
+				//On est déjà sur un arrêt
+
+				String stopDepart;
+				//Si on a jamais marché, on est à un arrêt, on le récupère
+				if(listeWaypointsBus.size()==0){
+					stopDepart = itineraireDepartTanResponse[0].getArretDepart().getLibelle();
+				} else { //Sinon on récupère l'arrêt jusqu'a lequel on a marché soit le dernier enregistré
+					stopDepart = listeWaypointsBus.get(listeWaypointsBus.size()-1).getTitre();
+				}
+				listeWaypointsBus.addAll(trajetBusDAO.getWaypoints(etape.getLigne().getNumLigne(), etape.getLigne().getTerminus(), stopDepart, arretStop.getStop_name()));
+			}
+			
+		}
+		
+		//////////////////////////////////////////////
+		//Récupération des points de passage Voiture//
+		//////////////////////////////////////////////
+		List<Waypoint> listeWaypointsVoiture = new ArrayList<Waypoint>();
+		listeWaypointsVoiture.add(new Waypoint(adresseDepart.getCoord(),adresseDepart.getNom(),"Départ"));
+		listeWaypointsVoiture.add(new Waypoint(adresseArrivee.getCoord(),adresseArrivee.getNom(),"Départ"));
 		
 		//TRAJET BUS
 		busVsVoiture.getTrajetBus().setCout(tanWebService.calculCoutTrajet(dateDepart, dateRetour, abonnementTan));
 		busVsVoiture.getTrajetBus().setTempsAller((int)((heureArriveeAller.getTime()-heureDepartAller.getTime())/MS_IN_MINUTE));
 		busVsVoiture.getTrajetBus().setTempsRetour((int)((heureArriveeRetour.getTime()-heureDepartRetour.getTime())/MS_IN_MINUTE));
+		busVsVoiture.getTrajetBus().setListeWaypoints(listeWaypointsBus);
 		//TODO : Calculs des distances ? (Cron qui calcul les distances entre arrêts ?)
 		busVsVoiture.getTrajetBus().setDistanceAller(0);
 		busVsVoiture.getTrajetBus().setDistanceRetour(0);
@@ -136,6 +185,7 @@ public class AdresseServiceImpl implements AdresseService{
 		busVsVoiture.getTrajetVoiture().setCout(coutVoiture);
 		busVsVoiture.getTrajetVoiture().setTempsAller(tempsAller);
 		busVsVoiture.getTrajetVoiture().setTempsRetour(tempsRetour);
+		busVsVoiture.getTrajetVoiture().setListeWaypoints(listeWaypointsVoiture);
 		busVsVoiture.getTrajetVoiture().setDistanceAller(distanceDepartGoogleResponse.getRows().get(0).getElements().get(0).getDistance().getValue());
 		busVsVoiture.getTrajetVoiture().setDistanceRetour(distanceRetourGoogleResponse.getRows().get(0).getElements().get(0).getDistance().getValue());
 		

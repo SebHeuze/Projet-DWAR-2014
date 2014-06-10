@@ -39,4 +39,12 @@ public interface StopDAO {
      * Trouver le stop par coordonnée
      */
     public Stop findStopByCoord(Coordonnee coord);
+    
+    /**
+     * Récupère l'arrêt qui correspond à ce nom
+     * @param name
+     * @return
+     */
+	public Stop findStopByName(String name);
+	
 }

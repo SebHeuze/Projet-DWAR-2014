@@ -119,6 +119,20 @@ public class StopDAOImpl implements StopDAO {
 	}
 
 
+    @SuppressWarnings("unchecked")
+   	@Override
+       @Transactional
+   	public Stop findStopByName(String name) {
+       	List<Stop> returnStopli = null;
+       	try {
+       		Query  q = pm.newQuery(Stop.class);
+       		q.setFilter("stop_name == stopNameParam "); 
+       		q.declareParameters("String stopNameParam");
+       		returnStopli = (List<Stop>) q.execute(name);
+       	} catch (Exception e) {
+           }
+       	return returnStopli.size()==0?null:returnStopli.get(0);  
+   	}
 
 	/**
 	 * @return the pathFichierStops
