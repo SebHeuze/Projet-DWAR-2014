@@ -1,5 +1,6 @@
 package com.projetweb.web;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -46,8 +47,13 @@ public class AdminController {
 	 * Initialiser la base de donnée en chargeant les fichiers de config
 	 */
 	@RequestMapping(value="/init-bdd", method = RequestMethod.GET)
-	public @ResponseBody String initBDD() {
-		
+	public @ResponseBody String initBDD(HttpServletRequest req) {
+		try {
+			req.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		LOG.info("AdminController::initBDD Début appel controlleur");
 		adminService.initBDD();
 		
