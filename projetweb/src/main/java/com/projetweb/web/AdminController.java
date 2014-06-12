@@ -48,12 +48,6 @@ public class AdminController {
 	 */
 	@RequestMapping(value="/init-bdd", method = RequestMethod.GET)
 	public @ResponseBody String initBDD(HttpServletRequest req) {
-		try {
-			req.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		LOG.info("AdminController::initBDD Début appel controlleur");
 		adminService.initBDD();
 		
