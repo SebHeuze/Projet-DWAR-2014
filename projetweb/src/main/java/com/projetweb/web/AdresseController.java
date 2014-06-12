@@ -1,5 +1,6 @@
 package com.projetweb.web;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -63,6 +64,13 @@ public class AdresseController {
 	@RequestMapping(value="/itineraire", method = RequestMethod.POST)
 	public @ResponseBody BusVsVoiture findItineraire(@RequestParam String idAdresseDepart, @RequestParam String idAdresseArrivee, @RequestParam @DateTimeFormat(pattern="dd/MM/yyyy HH:mm") Date dateDepart, @RequestParam @DateTimeFormat(pattern="dd/MM/yyyy HH:mm") Date dateRetour, @RequestParam String typeVoiture, @RequestParam String carburant, @RequestParam boolean abonnementTan, HttpServletRequest req, HttpServletResponse res) {
 		res.setHeader("Access-Control-Allow-Origin", "*");
+		try {
+			req.setCharacterEncoding("UTF-8");
+			res.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		LOG.info("AdresseController::findItineraire Début appel controlleur findItineraire");
 		BusVsVoiture busVsVoiture= adresseService.findItineraire(idAdresseDepart, idAdresseArrivee, dateDepart, dateRetour, typeVoiture, carburant, abonnementTan);
 		

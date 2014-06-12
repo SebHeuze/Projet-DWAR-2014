@@ -177,6 +177,8 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 		List<TrajetBus> returnTrajetBus = null;
 		try {
 			Query q = pm.newQuery(TrajetBus.class);
+			//Mettre la première lettre en majuscule parce que la Tan a eu la bonne idée d'en mettre aléatoirement quelle bonne idée
+			terminus = terminus.replaceFirst(".",(terminus.charAt(0)+"").toUpperCase());
 			q.setFilter("ligne == ligneParam && terminus == terminusParam && complet==true");
 			q.declareParameters("String ligneParam, String terminusParam");
 			returnTrajetBus = (List<TrajetBus>) q.execute(ligne, terminus);
@@ -201,11 +203,11 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 				waypoints.add(point);
 			}
 			//Si le stop actuel correspond au stop de départ alors on est sur le bon segment de ligne
-			if(stop.getStop_name()==stopDepart){
+			if(stop.getStop_name().toUpperCase().equals(stopDepart.toUpperCase())){
 				entreArrets= true;
 			}
 			//Si le stop actuel correspond au stop d'arrivée alors on quitte
-			if(stop.getStop_name()==stopArrive){
+			if(stop.getStop_name().toUpperCase().equals(stopArrive.toUpperCase())){
 				break;
 			}
 			

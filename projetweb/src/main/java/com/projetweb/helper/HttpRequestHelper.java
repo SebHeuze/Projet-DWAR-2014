@@ -12,9 +12,11 @@ import java.util.logging.Logger;
 
 
 
+
 import org.apache.http.util.EntityUtils;
 
 import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpEncoding;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
@@ -42,7 +44,7 @@ public class HttpRequestHelper {
 			if(response.getStatusCode() == 200) {
 				InputStream content = response.getContent();
 				//Read the server response and attempt to parse it as JSON
-				reader = new InputStreamReader(content);
+				reader = new InputStreamReader(content, "UTF-8");
 				
 				
 			} else {
@@ -70,7 +72,7 @@ public class HttpRequestHelper {
 			if(response.getStatusCode() == 200) {
 				InputStream content = response.getContent();
 				//Read the server response and attempt to parse it as JSON
-				reader = new InputStreamReader(content);
+				reader = new InputStreamReader(content,"UTF-8");
 				
 				
 			} else {

@@ -47,8 +47,10 @@ public class AdminController {
 	 */
 	@RequestMapping(value="/init-bdd", method = RequestMethod.GET)
 	public @ResponseBody String initBDD() {
+		
 		LOG.info("AdminController::initBDD Début appel controlleur");
 		adminService.initBDD();
+		
 		
 		return "Sucess";
 	}

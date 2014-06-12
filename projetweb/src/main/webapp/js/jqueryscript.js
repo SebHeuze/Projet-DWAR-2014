@@ -1,11 +1,11 @@
 $(document).ready(function(){
-	$( "#date_depart" ).datetimepicker({ altFormat: "dd-MM-yy", atlTimeFormat: 'hh:mm' });
-	$( "#date_retour" ).datetimepicker({ format: "dd-MM-yy", timeFormat: 'hh:mm' });
-
+	$( "#date_depart" ).datetimepicker({ dateFormat: "dd/mm/yy" });
+	$( "#date_retour" ).datetimepicker({ dateFormat: "dd/mm/yy"});
+	
 	$("#adresse_depart").val("Boulevard Jules Verne");
 	$("#adresse_arrivee").val("Mail Pablo Picasso");
-	$( "#date_depart" ).val("04/30/2014 12:00");
-	$( "#date_retour" ).val("04/30/2014 15:00");
+	$( "#date_depart" ).val("16/06/2014 12:00");
+	$( "#date_retour" ).val("16/06/2014 15:00");
 
 	var listeMarkers = [];
 	$("#singlebutton").click(function() {
