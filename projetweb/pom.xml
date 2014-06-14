@@ -565,7 +565,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gae.version>1.8.4</gae.version>
 		<appengine.app.version>1</appengine.app.version>
-		<spring.version>3.1.0.RELEASE</spring.version>
+		<spring.version>3.2.9.RELEASE</spring.version>
 		<jackson.version>1.9.10</jackson.version>
 		<datanucleus.version>1.1.5</datanucleus.version>
 		<datanucleus-appengine.version>1.0.10</datanucleus-appengine.version>

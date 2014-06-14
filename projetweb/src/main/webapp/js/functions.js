@@ -86,10 +86,11 @@ initialize = function() {
 
 };
 
-function setDirections() {
+function setDirections(coordsVoiture, coordsBus, adresseDepart, adresseArrivee) {
 	
 	var wayptsvoiture = [];
-	wayptsvoiture.push({
+	
+	/*wayptsvoiture.push({
         location:new google.maps.LatLng(47.231730, -1.538032),
         stopover:true});
 	wayptsvoiture.push({
@@ -100,9 +101,18 @@ function setDirections() {
         stopover:true});
 	wayptsvoiture.push({
         location:new google.maps.LatLng(47.218631, -1.538771),
-        stopover:true});
+        stopover:true});*/
 	
 	var wayptsbus = [];
+	coordsBus.forEach(function (entry){
+		if(wayptsbus.length<=6){
+			wayptsbus.push({
+		        location:new google.maps.LatLng(entry.latitude, entry.longitude),
+		        stopover:true});			
+		}
+	});
+	
+	/*
 	wayptsbus.push({
         location:new google.maps.LatLng(47.241730, -1.538032),
         stopover:true});
@@ -114,19 +124,19 @@ function setDirections() {
         stopover:true});
 	wayptsbus.push({
         location:new google.maps.LatLng(47.248631, -1.538771),
-        stopover:true});
+        stopover:true});*/
 	
 	var request = {
-		      origin: "47.234400, -1.535497",
-		      destination: "47.215921, -1.534976",
+		      origin: adresseDepart.coord.latitude+", "+adresseDepart.coord.longitude,
+		      destination: adresseArrivee.coord.latitude+", "+adresseArrivee.coord.longitude,
 		      waypoints: wayptsvoiture,
 		      optimizeWaypoints: true,
 		      travelMode: google.maps.TravelMode.DRIVING
 		  };
 	
 	var request1 = {
-		      origin: "47.234400, -1.535497",
-		      destination: "47.215921, -1.534976",
+		      origin: adresseDepart.coord.latitude+", "+adresseDepart.coord.longitude,
+		      destination: adresseArrivee.coord.latitude+", "+adresseArrivee.coord.longitude,
 		      waypoints: wayptsbus,
 		      optimizeWaypoints: true,
 		      travelMode: google.maps.TravelMode.DRIVING
@@ -169,5 +179,4 @@ function getMarkerImage(iconStr) {
 	}
 
 initialize();
-setDirections();
 

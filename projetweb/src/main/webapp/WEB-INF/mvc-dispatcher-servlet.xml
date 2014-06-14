@@ -61,6 +61,9 @@
 	</bean>
 	<bean id="TrajetBusDAO" class="com.projetweb.dao.impl.TrajetBusDAOImpl"	scope="singleton">
 		<property name="pathFichierTrajetBus" value="${pathFichierTrajets}" />
+		<property name="lignesTram">
+			<value type="java.lang.String[]">${lignesTram}</value>
+		</property>
 	</bean>
 	<bean id="EquipementDAO" class="com.projetweb.dao.impl.EquipementDAOImpl"	scope="singleton">
 	</bean>

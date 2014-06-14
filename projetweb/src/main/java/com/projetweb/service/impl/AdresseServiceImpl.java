@@ -22,6 +22,7 @@ import com.projetweb.bean.Coordonnee;
 import com.projetweb.bean.DistanceGoogleResponse;
 import com.projetweb.bean.ItineraireTanResponse;
 import com.projetweb.bean.Stop;
+import com.projetweb.bean.TravelMode;
 import com.projetweb.bean.Waypoint;
 import com.projetweb.bean.generated.tan.Etape;
 import com.projetweb.dao.AdresseDAO;
@@ -138,14 +139,14 @@ public class AdresseServiceImpl implements AdresseService{
 		//Récupération des points de passage Bus//
 		//////////////////////////////////////////
 		List<Waypoint> listeWaypointsBus = new ArrayList<Waypoint>();
-		listeWaypointsBus.add(new Waypoint(adresseDepart.getCoord(),adresseDepart.getNom(),"Départ"));
+		listeWaypointsBus.add(new Waypoint(adresseDepart.getCoord(),adresseDepart.getNom(),"Départ", null, null));
 		
 		for(Etape etape : itineraireDepartTanResponse[0].getEtapes()){
 			Stop arretStop = stopDAO.findStopByName(etape.getArretStop().getLibelle());
 			if(etape.getLigne()==null){
 				//Alors on marche
 				if (arretStop!=null){
-					Waypoint waypoint = new Waypoint(new Coordonnee(arretStop.getStop_lat(), arretStop.getStop_lon()),arretStop.getStop_name(),"Description");
+					Waypoint waypoint = new Waypoint(new Coordonnee(arretStop.getStop_lat(), arretStop.getStop_lon()),arretStop.getStop_name(),"Description", null, TravelMode.MARCHE);
 					listeWaypointsBus.add(waypoint);
 				} else {
 					LOG.log(Level.SEVERE, "AdresseServiceImpl::findItineraire Aucun arrêt correspondant");
@@ -169,8 +170,8 @@ public class AdresseServiceImpl implements AdresseService{
 		//Récupération des points de passage Voiture//
 		//////////////////////////////////////////////
 		List<Waypoint> listeWaypointsVoiture = new ArrayList<Waypoint>();
-		listeWaypointsVoiture.add(new Waypoint(adresseDepart.getCoord(),adresseDepart.getNom(),"Départ"));
-		listeWaypointsVoiture.add(new Waypoint(adresseArrivee.getCoord(),adresseArrivee.getNom(),"Départ"));
+		listeWaypointsVoiture.add(new Waypoint(adresseDepart.getCoord(),adresseDepart.getNom(), "Départ", null, TravelMode.VOITURE));
+		listeWaypointsVoiture.add(new Waypoint(adresseArrivee.getCoord(),adresseArrivee.getNom(),"Départ", null, TravelMode.VOITURE));
 		
 		//TRAJET BUS
 		busVsVoiture.getTrajetBus().setCout(tanWebService.calculCoutTrajet(dateDepart, dateRetour, abonnementTan));

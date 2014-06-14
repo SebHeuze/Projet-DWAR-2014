@@ -2,6 +2,7 @@ package com.projetweb.dao.impl;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +20,7 @@ import com.projetweb.bean.Coordonnee;
 import com.projetweb.bean.Stop;
 import com.projetweb.bean.Trajet;
 import com.projetweb.bean.TrajetBus;
+import com.projetweb.bean.TravelMode;
 import com.projetweb.bean.Waypoint;
 import com.projetweb.dao.StopDAO;
 import com.projetweb.dao.TrajetBusDAO;
@@ -34,6 +36,8 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 
 	private String pathFichierTrajetBus;
 
+	private String[] lignesTram;
+	
 	/**
 	 * Gestionnaire Stops en base
 	 */
@@ -101,8 +105,8 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 			}
 
 			if (lastShape == null
-					|| (lastShape.getShape_pt_lat() != shape.getShape_pt_lat() && lastShape
-							.getShape_pt_lon() != shape.getShape_pt_lon())) {
+					|| (!lastShape.getShape_pt_lat().equals(shape.getShape_pt_lat()) && !lastShape
+							.getShape_pt_lon().equals(shape.getShape_pt_lon()))) {
 				double latitudeShape = shape.getShape_pt_lat();
 				double longitudeShape = shape.getShape_pt_lon();
 
@@ -174,7 +178,7 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 	@Override
 	@Transactional
 	public TrajetBus findTrajet(String ligne, String terminus) {
-		List<TrajetBus> returnTrajetBus = null;
+		List<TrajetBus> returnTrajetBus = new ArrayList<TrajetBus>();
 		try {
 			Query q = pm.newQuery(TrajetBus.class);
 			//Mettre la première lettre en majuscule parce que la Tan a eu la bonne idée d'en mettre aléatoirement quelle bonne idée
@@ -183,6 +187,7 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 			q.declareParameters("String ligneParam, String terminusParam");
 			returnTrajetBus = (List<TrajetBus>) q.execute(ligne, terminus);
 		} catch (Exception e) {
+			LOG.log(Level.SEVERE, "Problème lors de la récupération du trajet", e);
 		}
 		return returnTrajetBus.size() == 0 ? null : returnTrajetBus.get(0);
 	}
@@ -199,7 +204,8 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 		for (Stop stop : ligne.getListeStops()){
 			//Si on est entre les arrets départ et arrivee alors on enregistre le Waypoint
 			if(entreArrets){
-				Waypoint point = new Waypoint(new Coordonnee(stop.getStop_lat(), stop.getStop_lon()), stop.getStop_name(), "Description");
+				TravelMode travelMode = Arrays.asList(lignesTram).contains(numLigne) ? TravelMode.TRAM : TravelMode.BUS;
+				Waypoint point = new Waypoint(new Coordonnee(stop.getStop_lat(), stop.getStop_lon()), stop.getStop_name(), "Description", numLigne, travelMode);
 				waypoints.add(point);
 			}
 			//Si le stop actuel correspond au stop de départ alors on est sur le bon segment de ligne
@@ -228,6 +234,20 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 	 */
 	public void setPathFichierTrajetBus(String pathFichierTrajetBus) {
 		this.pathFichierTrajetBus = pathFichierTrajetBus;
+	}
+
+	/**
+	 * @return the lignesTram
+	 */
+	public String[] getLignesTram() {
+		return lignesTram;
+	}
+
+	/**
+	 * @param lignesTram the lignesTram to set
+	 */
+	public void setLignesTram(String[] lignesTram) {
+		this.lignesTram = lignesTram;
 	}
 
 }
