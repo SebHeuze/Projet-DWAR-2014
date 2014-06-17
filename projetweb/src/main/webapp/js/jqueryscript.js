@@ -3,7 +3,7 @@ $(document).ready(function(){
 	$( "#date_retour" ).datetimepicker({ dateFormat: "dd/mm/yy"});
 	
 	//Données préremplies
-	$("#adresse_depart").val("Boulevard Jules Verne");
+	$("#adresse_depart").val("Boulevard des belges");
 	$("#adresse_arrivee").val("Mail Pablo Picasso");
 	$( "#date_depart" ).val("16/06/2014 16:00");
 	$( "#date_retour" ).val("16/06/2014 18:00");
@@ -113,7 +113,8 @@ $(document).ready(function(){
   			 	$( "#cadre_depart" ).hide(800);
   				$( "#cadre_resultat" ).show(800);
   				
-  				setDirections(data.trajetVoiture.listeWaypoints, data.trajetBus.listeWaypoints, data.adresseDepart, data.adresseArrivee);
+  				setDirectionsBus(data.trajetBus.listeWaypoints, data.adresseDepart, data.adresseArrivee);
+  				setDirectionsVoiture(data.trajetVoiture.listeWaypoints, data.adresseDepart, data.adresseArrivee);
 			}
 		);
 	}
