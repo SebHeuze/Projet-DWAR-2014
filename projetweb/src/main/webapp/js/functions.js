@@ -44,9 +44,27 @@ function createMarker(map, latlng, label, html, color) {
 	}
 
 
+function createTanMarker(map, latlng_depart,latlng_arrivee, ligne) {
+		latlng = new google.maps.LatLng((latlng_arrivee.k-latlng_depart.k)/2 + latlng_depart.k, (latlng_arrivee.A-latlng_depart.A)/2 + latlng_depart.A);
+	    var marker = new google.maps.Marker({
+	        position: latlng,
+	        map: map,
+	        icon: new google.maps.MarkerImage("https://www.tan.fr/ewp/images/pictos_lignes/"+ ligne +".gif",
+	        		null, /* size is determined at runtime */
+	        	    null, /* origin is 0,0 */
+	        	    null, /* anchor is bottom center of the scaled image */
+	        	    new google.maps.Size(14, 14)),
+	        title: "Ligne",
+	        });
+
+	    return marker;
+	}
+
+var drivingColor = "#CC0044";
+var transitColor = "#2BCC3D";
+
 initialize = function() {
-	var drivingColor = "#CC0044";
-	var transitColor = "#AA00CC";
+	
 	
 	
 	
@@ -73,9 +91,20 @@ initialize = function() {
 		map : map
 	});
 	
+	var lineSymbol = {
+		    path: 'M 0,-1 0,1',
+		    strokeOpacity: 1,
+		    scale: 4
+		  };
+	
 	walkPath = new google.maps.Polyline({
 		strokeColor : transitColor,
-		strokeOpacity : 0.8,
+		strokeOpacity : 0,
+		icons: [{
+		      icon: lineSymbol,
+		      offset: '0',
+		      repeat: '20px'
+		    }],
 		strokeWeight : 5,
 		map : map
 	});
@@ -96,6 +125,7 @@ initialize = function() {
 function setDirectionsBus(coordsBus, adresseDepart, adresseArrivee){ //récursif
 	var wayptsbus = [];
 	var wayptsbustravelmodes = [];
+	var wayptsbuslignes = [];
 	var itemsPerBatch = 10; // google API max = 10 - 1 start, 1 stop,  8 waypoints
 	var itemsCounter = 0;
 	var wayptsExist = coordsBus.length > 0;
@@ -106,17 +136,20 @@ function setDirectionsBus(coordsBus, adresseDepart, adresseArrivee){ //récursif
         var subWayptsBus = [];
         var subitemsCounter = 0;
         var lastTravelMode = coordsBus[itemsCounter+1].travelMode;
-        
+        var lastLigne = coordsBus[itemsCounter+1].ligne;
         for (var j = itemsCounter; j < coordsBus.length; j++) {
         	if (j != itemsCounter && coordsBus[j].travelMode != lastTravelMode){
+        		wayptsbuslignes.pop(); //On supprime le dernier comme on va repasser dessus la prochaine fois
             	break;
         	}
         	subitemsCounter++;
             subWayptsBus.push({
                 location: new google.maps.LatLng(coordsBus[j].latitude, coordsBus[j].longitude),
-                stopover: true
+                stopover: true            
             });
+            wayptsbuslignes.push(coordsBus[j].ligne);
             if (subitemsCounter == itemsPerBatch){
+            	wayptsbuslignes.pop(); //On supprime le dernier comme on va repasser dessus la prochaine fois
                 break;
             }
             
@@ -141,7 +174,7 @@ function setDirectionsBus(coordsBus, adresseDepart, adresseArrivee){ //récursif
 	        	polylinepath.push(wayptsbus[key][key2].location);
         	 }
         	 var busPath = new google.maps.Polyline({
-        			strokeColor : "#AAAACC",
+        			strokeColor : transitColor,
         			strokeOpacity : 0.8,
         			path:polylinepath,
         			strokeWeight : 5,
@@ -207,6 +240,7 @@ function setDirectionsBus(coordsBus, adresseDepart, adresseArrivee){ //récursif
 					  var markerletter = "A".charCodeAt(0);
 					  markerletter += i;
                       markerletter = String.fromCharCode(markerletter);
+                      createTanMarker(directionsDisplay1.getMap(),legs[i].start_location, legs[i].end_location,wayptsbuslignes[i+1]);
                       createMarker(directionsDisplay1.getMap(),legs[i].start_location,"marker"+i,"some text for marker "+i+"<br>"+legs[i].start_address,markerletter);
                     }
                     var i=legs.length;
@@ -267,6 +301,10 @@ function getMarkerImage(iconStr) {
 	   return icons[iconStr];
 
 	}
+
+function getPuceImageLetter(lettre){
+	return "http://maps.google.com/mapfiles/kml/paddle/"+lettre+"-lv.png"
+}
 
 function clone(obj) {
     if (null == obj || "object" != typeof obj) return obj;
