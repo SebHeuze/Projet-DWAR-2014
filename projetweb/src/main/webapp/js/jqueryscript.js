@@ -61,7 +61,7 @@ $(document).ready(function(){
 	function getAdresseDepart() {
 		$("#all_favoris").hide(800);
 		$.post(
-		  "http://localhost:8080/adresse/find",
+		  "/adresse/find",
 		  { adresse: $( "#adresse_depart" ).val()},
 		  function(data){
 		  			 if(data.length>1){
@@ -100,7 +100,7 @@ $(document).ready(function(){
 
 	function getAdresseArrivee() {
      	$.post(
-		  "http://localhost:8080/adresse/find",
+		  "/adresse/find",
 		  { adresse: $( "#adresse_arrivee" ).val()},
 		  function(data){
 		  			 if(data.length>1){
@@ -133,7 +133,7 @@ $(document).ready(function(){
 
 	function getItineraire() {
      	$.post(
-		  "http://localhost:8080/adresse/itineraire",
+		  "/adresse/itineraire",
 		  { idAdresseDepart: $( "#adresse_depart_id" ).val(),
 			idAdresseArrivee: $( "#adresse_arrivee_id" ).val(),
 			dateDepart:$( "#date_depart" ).val(),
