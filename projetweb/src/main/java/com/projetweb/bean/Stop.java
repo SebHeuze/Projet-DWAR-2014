@@ -6,7 +6,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import org.datanucleus.jpa.annotations.Extension;
+import javax.jdo.annotations.Extension;
 
 import com.google.api.client.util.Key;
 import com.google.gson.annotations.Expose;
