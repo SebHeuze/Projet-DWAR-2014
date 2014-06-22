@@ -7,6 +7,14 @@ body { margin : 0px;background-color: #888; height:100%;}
 #container{position:relative;width:100%;height:100%;margin:auto;background-color: #888}
 #container #map{width:100%;height:100%;margin:auto;}
 
+#login {box-shadow: 1px 1px 50px #555; z-index:99; left:50px; bottom:50px; position:absolute; background-color: #E2E2E2;}
+#login p {padding:10px; text-align:center; margin:0px}
+
+#all_favoris {box-shadow: 1px 1px 50px #555;  width: auto;  height:auto; z-index:99; left:50px; top:450px; position:absolute; background-color: #E2E2E2;}
+#all_favoris legend{text-align: center; padding-top:5px; margin:0; background-color: #70A8D8; padding-left:10px; height: 40px}
+#all_favoris ul {padding : 20px}
+#all_favoris li {padding : 5px}
+
 div[id*='cadre'] {box-shadow: 1px 1px 50px #555; z-index:99; right:50px; top:100px; position:absolute; background-color: #E2E2E2;width: 350px; height: auto}
 div[id*='cadre'] form #fields {margin : 10px;}
 div[id*='cadre'] form legend {text-align: center; padding-top:5px; background-color: #70A8D8; padding-left:10px; height: 40px}
@@ -23,6 +31,7 @@ div[id*='cadre'] .control-group {margin: 10px;}
 #resultat th.bus {background: #6DDF7A;}
 #resultat th.voiture {background: #FF7676;}
 
+#favoris {text-align: center; margin: 10px;}
 #footer {width:100%; height:150px; background-color: #888}
 
 

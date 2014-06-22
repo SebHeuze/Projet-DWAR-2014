@@ -4,13 +4,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import com.projetweb.bean.Coordonnee;
 
 public class UtilsHelper {
 
 	
+	//Couts carburants
+	private static String coutsCarburants;
 	
+	private static HashMap<String, Float> coutsCarburantsHM;
 	/**
 	 *  convert InputStream to String
 	 * @param is
@@ -105,6 +109,14 @@ public class UtilsHelper {
 	} 
 	
 	/**
+	 * Récupérer le cout du trajet niveau carburant
+	 */
+	public static float getPrixCarburant(String carburant,int distance){
+		float prix = coutsCarburantsHM.get(carburant)*(distance/ConstantesHelper.M_IN_KM);
+		return prix;
+	}
+	
+	/**
 	 * Conversion degré vers Radian
 	 * @param deg
 	 * @return
@@ -120,6 +132,30 @@ public class UtilsHelper {
 	 */
 	private static double rad2deg(double rad) {
 	    return (rad / Math.PI * 180.0);
+	}
+
+	/**
+	 * @return the coutsCarburants
+	 */
+	public static String getCoutsCarburants() {
+		return coutsCarburants;
+	}
+
+	/**
+	 * @param coutsCarburants the coutsCarburants to set
+	 */
+	public static void setCoutsCarburants(String coutsCarburants) {
+		UtilsHelper.coutsCarburants = coutsCarburants;
+		UtilsHelper.coutsCarburantsHM = new HashMap<String,Float>();
+		
+		if (coutsCarburants != null){
+			String str[] = coutsCarburants.split(";");
+			for(String carburant : str){
+				String str2[] = carburant.split("/");
+				coutsCarburantsHM.put(str2[0], Float.parseFloat(str2[1]));
+			}
+		}
+		
 	} 
 
 

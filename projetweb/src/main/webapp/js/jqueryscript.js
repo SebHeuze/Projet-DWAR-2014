@@ -8,6 +8,7 @@ $(document).ready(function(){
 	$( "#date_depart" ).val("16/06/2014 16:00");
 	$( "#date_retour" ).val("16/06/2014 18:00");
 
+	$( "#all_favoris" ).draggable();
 	$( "#cadre" ).draggable({drag:drag_cadre});
 	$( "#cadre_arrivee" ).draggable({drag:drag_cadre});
 	$( "#cadre_depart" ).draggable({drag:drag_cadre});
@@ -22,9 +23,43 @@ $(document).ready(function(){
         $("#cadre_resultat").css({left: $(this).position().left});
     }
 	
+	
+	$('li[id^=favoris_]').click(function(){
+		var id = $(this).attr('id').replace(/favoris_/, '');
+		$( "#adresse_depart_id" ).val($( "#favoris_depart_"+id ).val());
+		$( "#adresse_arrivee_id" ).val($( "#favoris_arrivee_"+id ).val());
+		
+		$("#all_favoris").hide(800);
+		getItineraire();		
+	});
+	
+	$("#favoris").click(function(){
+		$.post(
+				  "http://localhost:8080/adresse/favoris",
+				  { depart: $( "#adresse_depart_id" ).val(),
+					arrivee: $( "#adresse_arrivee_id" ).val() },
+				  function(data){
+						if(data==false){
+							alert ("Le favoris existe déjà");
+						} else if (data==true){
+							alert ("Favoris ajouté avec succès");
+						}else{
+							alert ("Une erreur est survenue");
+						}
+				  });
+	});
+	
+	$("#reload_page").click(function(){
+		location.reload();
+	});
+	
 	var listeMarkers = [];
 	
-	$("#singlebutton").click(function() {
+	
+	$("#singlebutton").click(getAdresseDepart);
+
+	function getAdresseDepart() {
+		$("#all_favoris").hide(800);
 		$.post(
 		  "http://localhost:8080/adresse/find",
 		  { adresse: $( "#adresse_depart" ).val()},
@@ -54,8 +89,7 @@ $(document).ready(function(){
 		  			 }
 				  }
 		);
-	});
-
+	}
 	function clearOverlays() {
 	  for (var i = 0; i < listeMarkers.length; i++ ) {
 	    listeMarkers[i].setMap(null);
@@ -104,7 +138,6 @@ $(document).ready(function(){
 			idAdresseArrivee: $( "#adresse_arrivee_id" ).val(),
 			dateDepart:$( "#date_depart" ).val(),
 			dateRetour:$( "#date_retour" ).val(),
-			typeVoiture:$( "#type_voiture" ).val(),
 			carburant:$( "#carburant" ).val(),
 			abonnementTan:$( "input[name='abonnement_tan']:checked" ).val()
 		  },

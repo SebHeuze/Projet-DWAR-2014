@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
   <head>
    
@@ -27,19 +28,27 @@
             <p>Veuillez patienter pendant le chargement de la carte...</p>
         </div>
         <div id="login" class="arrondi">
-          <p>{$login_message}</p>
+          <p>${login_message}</p>
         </div>
-        
         <div id="all_favoris" style="display:${display_fav}" class="arrondi">
           <legend class="arronditop">Favoris</legend>
-          <ul>
-          	<li>Favoris 1</li>
-          	<li>Favoris 2</li>
-          	<li>Favoris 3</li>
-          	<li>Favoris 4</li>
-          </ul>
+          <c:choose>  
+	   		 <c:when test="${not empty liste_favoris}">  
+	            <ul>
+	            	<c:set var="count" value="0" scope="page" />
+					<c:forEach var="favorisValue" items="${liste_favoris}">
+						<li id="favoris_${count}">${favorisValue}</li>
+						<input id="favoris_depart_${count}" type="hidden" value="${favorisValue.depart}"/>
+						<input id="favoris_arrivee_${count}" type="hidden" value="${favorisValue.arrivee}"/>
+						<c:set var="count" value="${count + 1}" scope="page"/>
+					</c:forEach>
+				</ul>        	  
+	         </c:when>  
+	         <c:otherwise>  
+	              Aucun favoris       
+	         </c:otherwise>  
+		</c:choose>  
         </div>
-        
         <div id="cadre" class="arrondi">
           <form class="form-horizontal">
             <fieldset>
@@ -73,17 +82,6 @@
                   <input id="date_retour" name="date_retour" type="text" class="input-medium" required="">
               </div>
 
-              <!-- Select Basic -->
-              <div class="control-group">
-                <label class="control-label" for="type_voiture">Type voiture</label>
-                  <select id="type_voiture" name="type_voiture" class="input-medium">
-                    <option>Citadine</option>
-                    <option>Compacte</option>
-                    <option>Familiale</option>
-                    <option>Routière</option>
-                    <option>Luxe</option>
-                  </select>
-              </div>
 
               <!-- Select Basic -->
               <div class="control-group">
@@ -129,12 +127,12 @@
             </div>
           </form>
         </div>
-        <div id="cadre_resultat" style="" class="arrondi">
+        <div id="cadre_resultat" style="display:none" class="arrondi">
           <form class="form-horizontal">
             <fieldset><legend class="arronditop" style="margin:0px">Résultat</legend></fieldset>
             <div id="resultat">
               <div id="favoris">
-				<a href="javascript:return false;"><img height=50 width=50 src="http://www.neomenage.fr/images/favoris1.59.png"/> Ajouter aux favoris </a>
+				${ajouter_favoris}
               </div>
               <table>
                 <tr>
@@ -154,6 +152,9 @@
                   <td>15 min</td>
                 </tr>
               </table>
+            </div>
+            <div id="retry">
+            	<center><a href="javascript: void(0)" id="reload_page">Nouveau trajet</a></center>
             </div>
           </form>
         </div>

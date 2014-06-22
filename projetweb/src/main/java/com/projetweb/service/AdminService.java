@@ -15,7 +15,8 @@ public interface AdminService {
 	/**
 	 * initialiser la base de donnée
 	 */
-	void initBDD();
+	void initBDDStops();
 
+	void initBDDTrajets();
 
 }

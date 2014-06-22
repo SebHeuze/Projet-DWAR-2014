@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.projetweb.bean.Adresse;
 import com.projetweb.bean.BusVsVoiture;
 import com.projetweb.service.AdresseService;
@@ -31,7 +34,7 @@ public class AdresseController {
  
 	
 	/**
-	 * Service d'appel TAN
+	 * Service Adresse
 	 */
 	@Autowired
 	private AdresseService adresseService;
@@ -62,16 +65,29 @@ public class AdresseController {
 	 * @return la liste d'adresse au format JSON
 	 */
 	@RequestMapping(value="/itineraire", method = RequestMethod.POST)
-	public @ResponseBody BusVsVoiture findItineraire(@RequestParam String idAdresseDepart, @RequestParam String idAdresseArrivee, @RequestParam @DateTimeFormat(pattern="dd/MM/yyyy HH:mm") Date dateDepart, @RequestParam @DateTimeFormat(pattern="dd/MM/yyyy HH:mm") Date dateRetour, @RequestParam String typeVoiture, @RequestParam String carburant, @RequestParam boolean abonnementTan, HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody BusVsVoiture findItineraire(@RequestParam String idAdresseDepart, @RequestParam String idAdresseArrivee, @RequestParam @DateTimeFormat(pattern="dd/MM/yyyy HH:mm") Date dateDepart, @RequestParam @DateTimeFormat(pattern="dd/MM/yyyy HH:mm") Date dateRetour, @RequestParam String carburant, @RequestParam boolean abonnementTan, HttpServletRequest req, HttpServletResponse res) {
 		res.setHeader("Access-Control-Allow-Origin", "*");
 		
 		LOG.info("AdresseController::findItineraire Début appel controlleur findItineraire");
-		BusVsVoiture busVsVoiture= adresseService.findItineraire(idAdresseDepart, idAdresseArrivee, dateDepart, dateRetour, typeVoiture, carburant, abonnementTan);
+		BusVsVoiture busVsVoiture= adresseService.findItineraire(idAdresseDepart, idAdresseArrivee, dateDepart, dateRetour, carburant, abonnementTan);
 		
 		return busVsVoiture;
 	}
 
 
+	@RequestMapping(value="/favoris", method = RequestMethod.POST)
+	public @ResponseBody boolean setFavoris(@RequestParam String depart, @RequestParam String arrivee,HttpServletRequest req, HttpServletResponse res) {
+		res.setHeader("Access-Control-Allow-Origin", "*");
+		LOG.info("AdresseController::setFavoris Début appel controlleur");
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+		
+		if(user!=null){
+			return adresseService.setFavoris(depart,arrivee,user.getEmail());
+		}else{
+			return false;
+		}
+	}
  
  
 }

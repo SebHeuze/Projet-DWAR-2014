@@ -50,8 +50,12 @@ public class AdminServiceImpl implements AdminService{
 	private static final Logger LOG = Logger.getLogger(AdminServiceImpl.class.getName());
 
 	@Override
-	public void initBDD() {
+	public void initBDDStops() {
 		stopDAO.initBDD();
+	}
+	
+	@Override
+	public void initBDDTrajets() {
 		trajetBusDAO.initBDD();		
 	}
 

@@ -16,19 +16,23 @@ import static com.projetweb.helper.ConstantesHelper.HEURE_FORMAT_TAN;
 import static com.projetweb.helper.ConstantesHelper.MS_IN_MINUTE;
 import static com.projetweb.helper.ConstantesHelper.S_IN_MINUTE;
 
+import com.google.appengine.api.users.User;
 import com.projetweb.bean.Adresse;
 import com.projetweb.bean.BusVsVoiture;
 import com.projetweb.bean.Coordonnee;
 import com.projetweb.bean.DistanceGoogleResponse;
+import com.projetweb.bean.Favoris;
 import com.projetweb.bean.ItineraireTanResponse;
 import com.projetweb.bean.Stop;
 import com.projetweb.bean.TravelMode;
 import com.projetweb.bean.Waypoint;
 import com.projetweb.bean.generated.tan.Etape;
 import com.projetweb.dao.AdresseDAO;
+import com.projetweb.dao.FavorisDAO;
 import com.projetweb.dao.StopDAO;
 import com.projetweb.dao.TrajetBusDAO;
 import com.projetweb.helper.TarifsParkingsHelper;
+import com.projetweb.helper.UtilsHelper;
 import com.projetweb.service.AdresseService;
 import com.projetweb.service.GoogleWebService;
 import com.projetweb.service.TanWebService;
@@ -66,6 +70,12 @@ public class AdresseServiceImpl implements AdresseService{
 	private TrajetBusDAO trajetBusDAO;
 	
 	/**
+	 * Gestionnaire de favoris en base
+	 */
+	@Autowired
+	private FavorisDAO favorisDAO;
+	
+	/**
 	 * Logger
 	 */
 	private static final Logger LOG = Logger.getLogger(AdresseServiceImpl.class.getName());
@@ -91,7 +101,7 @@ public class AdresseServiceImpl implements AdresseService{
 	}
 
 	@Override
-	public BusVsVoiture findItineraire(String idAdresseDepart,String idAdresseArrivee, Date dateDepart, Date dateRetour, String typeVoiture, String carburant, boolean abonnementTan) {
+	public BusVsVoiture findItineraire(String idAdresseDepart,String idAdresseArrivee, Date dateDepart, Date dateRetour, String carburant, boolean abonnementTan) {
 		//On récupère les deux adresses en base
 		LOG.info("AdresseServiceImpl::findItineraire récupération des adresses en base");
 		Adresse adresseDepart = adresseDAO.getAdresseById(idAdresseDepart);
@@ -113,6 +123,10 @@ public class AdresseServiceImpl implements AdresseService{
 		Date heureDepartRetour = new Date();
 		Date heureArriveeRetour = new Date();
 		
+		float distanceAller = distanceDepartGoogleResponse.getRows().get(0).getElements().get(0).getDistance().getValue();
+		float distanceRetour = distanceRetourGoogleResponse.getRows().get(0).getElements().get(0).getDistance().getValue();
+		
+		
 		try {
 			heureDepartAller = HEURE_FORMAT_TAN.parse(itineraireDepartTanResponse[0].getHeureDepart());
 			heureArriveeAller = HEURE_FORMAT_TAN.parse(itineraireDepartTanResponse[0].getHeureArrivee());
@@ -131,7 +145,7 @@ public class AdresseServiceImpl implements AdresseService{
 		//On ajoute le temps d'aller au parking à la date de départ pour le calcul
 		cal.add(Calendar.MINUTE, tempsAller);
 		float coutVoiture = TarifsParkingsHelper.calculerCoutParking(cal.getTime(), dateRetour, adresseArrivee.getCoord());
-		
+		coutVoiture = coutVoiture + UtilsHelper.getPrixCarburant(carburant, (int)(distanceAller+distanceRetour));
 		//Initialisation de l'objet réponse
 		BusVsVoiture busVsVoiture = new BusVsVoiture(adresseDepart, adresseArrivee);
 		
@@ -187,10 +201,29 @@ public class AdresseServiceImpl implements AdresseService{
 		busVsVoiture.getTrajetVoiture().setTempsAller(tempsAller);
 		busVsVoiture.getTrajetVoiture().setTempsRetour(tempsRetour);
 		busVsVoiture.getTrajetVoiture().setListeWaypoints(listeWaypointsVoiture);
-		busVsVoiture.getTrajetVoiture().setDistanceAller(distanceDepartGoogleResponse.getRows().get(0).getElements().get(0).getDistance().getValue());
-		busVsVoiture.getTrajetVoiture().setDistanceRetour(distanceRetourGoogleResponse.getRows().get(0).getElements().get(0).getDistance().getValue());
+		busVsVoiture.getTrajetVoiture().setDistanceAller(distanceAller);
+		busVsVoiture.getTrajetVoiture().setDistanceRetour(distanceRetour);
 		
 		return busVsVoiture;
+	}
+
+	@Override
+	public boolean setFavoris(String depart, String arrivee, String user) {
+
+		Favoris favoris = new Favoris(depart, arrivee, user);
+		//On vérifie si il n'existe pas déjà
+		if(favorisDAO.exist(favoris)){
+			return false;
+		} else {
+			favorisDAO.store(favoris);
+			return true;
+		}
+	}
+
+	@Override
+	public List<Favoris> getAllFavoris(User user) {
+		
+		return favorisDAO.getAllByUser(user);
 	}
 
 

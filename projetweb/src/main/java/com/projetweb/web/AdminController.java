@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
 import com.projetweb.bean.Adresse;
 import com.projetweb.bean.BusVsVoiture;
 import com.projetweb.service.AdminService;
@@ -46,14 +49,39 @@ public class AdminController {
 	/**
 	 * Initialiser la base de donnée en chargeant les fichiers de config
 	 */
-	@RequestMapping(value="/init-bdd", method = RequestMethod.GET)
-	public @ResponseBody String initBDD(HttpServletRequest req) {
+	@RequestMapping(value="/init-stops", method = RequestMethod.POST)
+	public @ResponseBody String initBDDStops(HttpServletRequest req) {
 		LOG.info("AdminController::initBDD Début appel controlleur");
-		adminService.initBDD();
+		adminService.initBDDStops();
+
+		//On ajoute maintenant les trajets
+		Queue queue = QueueFactory.getQueue("default");
+	    queue.add(TaskOptions.Builder.withUrl("/admin/init-trajets"));
+		
+		return "Sucess";
+	}
+	
+	@RequestMapping(value="/init-trajets", method = RequestMethod.POST)
+	public @ResponseBody String initBDDTrajets(HttpServletRequest req) {
+		LOG.info("AdminController::initBDD Début appel controlleur");
+		adminService.initBDDTrajets();
+		
 		
 		
 		return "Sucess";
 	}
+	
+	@RequestMapping(value="/start_queue", method = RequestMethod.GET)
+	public @ResponseBody String startQueue(HttpServletRequest req) {
+		LOG.info("AdminController::startQueue Ajouts des tâches à la queue");
+		
+		Queue queue = QueueFactory.getQueue("default");
+	    queue.add(TaskOptions.Builder.withUrl("/admin/init-stops"));
+		
+		
+		return "Taches ajoutées";
+	}
+	
 	
  
  

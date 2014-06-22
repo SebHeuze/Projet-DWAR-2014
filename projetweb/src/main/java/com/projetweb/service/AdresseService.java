@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.google.appengine.api.users.User;
 import com.projetweb.bean.Adresse;
 import com.projetweb.bean.BusVsVoiture;
+import com.projetweb.bean.Favoris;
 
 @Service
 public interface AdresseService {
@@ -27,6 +29,22 @@ public interface AdresseService {
 	 * @param coutCarburant 
 	 * @return Informations Itinéraire
 	 */
-	BusVsVoiture findItineraire(String idAdresseDepart,String idAdresseArrivee, Date dateDepart, Date dateRetour, String typeVoiture, String carburant, boolean abonnementTan);
+	BusVsVoiture findItineraire(String idAdresseDepart,String idAdresseArrivee, Date dateDepart, Date dateRetour, String carburant, boolean abonnementTan);
+
+	/**
+	 * Ajoute un favoris
+	 * @param depart
+	 * @param arrivee
+	 * @param user l'adresse mail de l'utilisateur
+	 * @return le resultat (True si ça a marché, false sinon)
+	 */
+	boolean setFavoris(String depart, String arrivee, String user);
+
+	/**
+	 * récupérer tous les favoris d'un utilisateur
+	 * @param user
+	 * @return
+	 */
+	List<Favoris> getAllFavoris(User user);
 	
 }

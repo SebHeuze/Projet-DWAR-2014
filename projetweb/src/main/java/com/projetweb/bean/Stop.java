@@ -1,10 +1,14 @@
 package com.projetweb.bean;
 
 import javax.annotation.Generated;
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import org.datanucleus.jpa.annotations.Extension;
+
+import com.google.api.client.util.Key;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,7 +22,8 @@ public class Stop implements java.io.Serializable {
 	private static final long serialVersionUID = 1707409217819533702L;
 
 	@PrimaryKey
-	@Expose
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+    @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
 	private String stop_id;
 
 	@Expose
@@ -124,5 +129,6 @@ public class Stop implements java.io.Serializable {
 	public void setParent_station(String parent_station) {
 		this.parent_station = parent_station;
 	}
+	
 
 }

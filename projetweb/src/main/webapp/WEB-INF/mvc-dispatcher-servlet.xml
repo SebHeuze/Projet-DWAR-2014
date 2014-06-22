@@ -53,7 +53,8 @@
 	<bean id="AdminService" class="com.projetweb.service.impl.AdminServiceImpl" >
 	</bean>
 	
-	
+	<bean id="FavorisDAO" class="com.projetweb.dao.impl.FavorisDAOImpl"	scope="singleton">
+	</bean>
 	<bean id="AdresseDAO" class="com.projetweb.dao.impl.AdresseDAOImpl"	scope="singleton">
 	</bean>
 	<bean id="StopDAO" class="com.projetweb.dao.impl.StopDAOImpl"	scope="singleton">
@@ -86,6 +87,10 @@
 	    <property name="pathFichierTarifsParkings" value="${pathTarifsParkings}" />
 	    <property name="pathFichierListeEquipements" value="${pathListeParkings}" />
 	    <property name="categoriesParkings" value="${categoriesParkings}" />
+ 	</bean>
+ 	
+ 	<bean id="UtilsHelper" class="com.projetweb.helper.UtilsHelper" >
+	    <property name="coutsCarburants" value="${coutsCarburants}" />
  	</bean>
 	
 	<!--  CONFIGURATION -->
