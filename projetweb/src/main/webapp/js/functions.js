@@ -291,7 +291,7 @@ function getMarkerImage(iconStr) {
 	   }
 	   if (!icons[iconStr]) {
 		  if(iconStr=="parking"){
-			  icons[iconStr] = new google.maps.MarkerImage("http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-9d7050/shapecolor-color/shadow-1/border-dark/symbolstyle-white/symbolshadowstyle-dark/gradient-no/parkinggarage.png",
+			  icons[iconStr] = new google.maps.MarkerImage("http://img1.imagilive.com/0614/parkinggarage.png",
 				    	// This marker is 20 pixels wide by 34 pixels tall.
 				    	 new google.maps.Size(32, 37),
 				      	// The origin for this image is 0,0.
