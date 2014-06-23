@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.projetweb.bean.Coordonnee;
 import com.projetweb.bean.Equipement;
 import com.projetweb.bean.ListeEquipementsAPIReponse;
+import com.projetweb.bean.Parking;
 import com.projetweb.bean.Tarif;
 import com.projetweb.bean.TarifParking;
 
@@ -105,10 +106,13 @@ public class TarifsParkingsHelper {
  	 * @param fin
  	 * @return
  	 */
-	public static float calculerCoutParking(Date debut, Date fin, Coordonnee maPosition){
+	public static Parking calculerCoutParking(Date debut, Date fin, Coordonnee maPosition){
 		Equipement parkingProche = trouverParkingLePlusProche(maPosition);
-		
-		return prixParking(debut, fin, parkingProche);
+		Parking parking = new Parking();
+		parking.setCoord(parkingProche.getCoordonnees());
+		parking.setNom(parkingProche.getGeo().getName());
+		parking.setCout(prixParking(debut, fin, parkingProche));
+		return parking;
 	}
 
 	/**

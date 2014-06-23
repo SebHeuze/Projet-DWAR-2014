@@ -256,7 +256,7 @@ function setDirectionsBus(coordsBus, adresseDepart, adresseArrivee){ //récursif
 	
 }
 
-function setDirectionsVoiture(coordsVoiture, adresseDepart, adresseArrivee) {
+function setDirectionsVoiture(coordsVoiture, adresseDepart, adresseArrivee, parking) {
 	
 
 	var request = {
@@ -275,14 +275,14 @@ function setDirectionsVoiture(coordsVoiture, adresseDepart, adresseArrivee) {
 	
 	
 	
-	
-	createMarker(directionsDisplay.getMap(),new google.maps.LatLng(adresseDepart.coord.latitude, adresseDepart.coord.longitude),"Tiltesf","markersome text for depart <br>","A");
+	createMarker(directionsDisplay.getMap(),new google.maps.LatLng(parking.coord.latitude, parking.coord.longitude),parking.nom,"Cout parking "+parking.cout+"<br>","parking")
+	/*createMarker(directionsDisplay.getMap(),new google.maps.LatLng(adresseDepart.coord.latitude, adresseDepart.coord.longitude),"Tiltesf","markersome text for depart <br>","A");
 	var markerletter = "B".charCodeAt(0);
 	/*wayptsvoiture.forEach(function(entry){
 		createMarker(directionsDisplay.getMap(),entry.location,"Tiltesf","markersome text for marker <br>",String.fromCharCode(markerletter));
 		markerletter += 1;
 	});*/
-	createMarker(directionsDisplay.getMap(),new google.maps.LatLng(adresseArrivee.coord.latitude, adresseArrivee.coord.longitude),"Tiltesf","markersome text for arrivee <br>",String.fromCharCode(markerletter));
+	/*createMarker(directionsDisplay.getMap(),new google.maps.LatLng(adresseArrivee.coord.latitude, adresseArrivee.coord.longitude),"Tiltesf","markersome text for arrivee <br>",String.fromCharCode(markerletter));*/
 }
 
 function getMarkerImage(iconStr) {
@@ -290,13 +290,23 @@ function getMarkerImage(iconStr) {
 	      iconStr = "red"; 
 	   }
 	   if (!icons[iconStr]) {
-	      icons[iconStr] = new google.maps.MarkerImage("http://www.google.com/mapfiles/marker"+ iconStr +".png",
-	      // This marker is 20 pixels wide by 34 pixels tall.
-	      new google.maps.Size(20, 34),
-	      // The origin for this image is 0,0.
-	      new google.maps.Point(0,0),
-	      // The anchor for this image is at 6,20.
-	      new google.maps.Point(9, 34));
+		  if(iconStr=="parking"){
+			  icons[iconStr] = new google.maps.MarkerImage("http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-9d7050/shapecolor-color/shadow-1/border-dark/symbolstyle-white/symbolshadowstyle-dark/gradient-no/parkinggarage.png",
+				    	// This marker is 20 pixels wide by 34 pixels tall.
+				    	 new google.maps.Size(32, 37),
+				      	// The origin for this image is 0,0.
+				      	new google.maps.Point(0,0),
+				      	// The anchor for this image is at 6,20.
+				      	new google.maps.Point(9, 34));
+		  }else{
+			icons[iconStr] = new google.maps.MarkerImage("http://www.google.com/mapfiles/marker"+ iconStr +".png",
+	    	// This marker is 20 pixels wide by 34 pixels tall.
+	    	 new google.maps.Size(20, 34),
+	      	// The origin for this image is 0,0.
+	      	new google.maps.Point(0,0),
+	      	// The anchor for this image is at 6,20.
+	      	new google.maps.Point(9, 34));
+		  }
 	   } 
 	   return icons[iconStr];
 

@@ -38,6 +38,7 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 
 	private String[] lignesTram;
 	
+	private String[] trajetsOK;
 	/**
 	 * Gestionnaire Stops en base
 	 */
@@ -59,7 +60,7 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 		LOG.info("TrajetBusDAOImpl::init chargement des trajetBus en base de donnée");
 		// Nettoyage de la BDD
 		this.deleteAll();
-
+		List<String> trajetsOKList = Arrays.asList(trajetsOK);
 		/* Récupération de la liste des TrajetBus */
 		Gson gson = new Gson();
 
@@ -79,57 +80,64 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 		String currentShapeId = "";
 		TrajetBus trajetTmp = null;
 		Shape lastShape = null;
+		int nbStops=0;
 		for (Shape shape : arrayShapes) {
-			if (currentShapeId.isEmpty()
-					|| !currentShapeId.equals(shape.getShape_id())) {
-				if (trajetTmp != null && trajetTmp.getListeStops().size() > 0) {
-					trajetTmp.setDepart(trajetTmp.getListeStops().get(0)
-							.getStop_name());
-					trajetTmp.setTerminus(trajetTmp.getListeStops()
-							.get(trajetTmp.getListeStops().size() - 1)
-							.getStop_name());
-					this.store(trajetTmp);
-					lastShape = null;
-				}
-				currentShapeId = shape.getShape_id();
-				trajetTmp = new TrajetBus();
-				trajetTmp.setTrajetId(currentShapeId);
-				trajetTmp.setListeStops(new ArrayList<Stop>());
-				trajetTmp.setComplet(true);
-
-				// On enlève les 4 chiffres derrière le numéro de ligne dans
-				// l'id Shape
-				String ligne = currentShapeId.substring(0,
-						currentShapeId.length() - 4);
-				trajetTmp.setLigne(ligne);
-			}
-
-			if (lastShape == null
-					|| (!lastShape.getShape_pt_lat().equals(shape.getShape_pt_lat()) && !lastShape
-							.getShape_pt_lon().equals(shape.getShape_pt_lon()))) {
-				double latitudeShape = shape.getShape_pt_lat();
-				double longitudeShape = shape.getShape_pt_lon();
-
-				try {
-					Stop stop = stopDAO.findStopByCoord(new Coordonnee(
-							latitudeShape, longitudeShape));
-					if (stop == null) {
-						LOG.severe("TrajetBusDAOImpl::initBDD aucun stop correspondant à ces coordonnées "
-								+ latitudeShape + "/" + longitudeShape);
-						trajetTmp.setComplet(false);
-					} else {
-						trajetTmp.getListeStops().add(stop);
+			if (trajetsOKList.contains(shape.getShape_id())){
+				if (currentShapeId.isEmpty()
+						|| !currentShapeId.equals(shape.getShape_id())) {
+					if (trajetTmp != null && trajetTmp.getListeStops().size() > 0) {
+						trajetTmp.setDepart(trajetTmp.getListeStops().get(0)
+								.getStop_name());
+						trajetTmp.setTerminus(trajetTmp.getListeStops()
+								.get(trajetTmp.getListeStops().size() - 1)
+								.getStop_name());
+	
+						trajetTmp.setNbArrets(nbStops);
+						this.store(trajetTmp);
+						nbStops=0;
+						lastShape = null;
 					}
-				} catch (Exception e) {
-					LOG.log(Level.SEVERE,
-							"TrajetBusDAOImpl::initBDD Erreur lors de la recherche du stop correspondant à ces coordonnées "
-									+ latitudeShape + "/" + longitudeShape, e);
+					currentShapeId = shape.getShape_id();
+					trajetTmp = new TrajetBus();
+					trajetTmp.setTrajetId(currentShapeId);
+					trajetTmp.setListeStops(new ArrayList<Stop>());
+					trajetTmp.setComplet(true);
+	
+					// On enlève les 4 chiffres derrière le numéro de ligne dans
+					// l'id Shape
+					String ligne = currentShapeId.substring(0,
+							currentShapeId.length() - 4);
+					trajetTmp.setLigne(ligne);
 				}
+	
+				if (lastShape == null
+						|| (!lastShape.getShape_pt_lat().equals(shape.getShape_pt_lat()) && !lastShape
+								.getShape_pt_lon().equals(shape.getShape_pt_lon()))) {
+					double latitudeShape = shape.getShape_pt_lat();
+					double longitudeShape = shape.getShape_pt_lon();
+	
+					try {
+						Stop stop = stopDAO.findStopByCoord(new Coordonnee(
+								latitudeShape, longitudeShape));
+						if (stop == null) {
+							LOG.severe("TrajetBusDAOImpl::initBDD aucun stop correspondant à ces coordonnées "
+									+ latitudeShape + "/" + longitudeShape);
+							trajetTmp.setComplet(false);
+						} else {
+							trajetTmp.getListeStops().add(stop);
+							nbStops++;
+						}
+					} catch (Exception e) {
+						LOG.log(Level.SEVERE,
+								"TrajetBusDAOImpl::initBDD Erreur lors de la recherche du stop correspondant à ces coordonnées "
+										+ latitudeShape + "/" + longitudeShape, e);
+					}
+				}
+	
+				// On sauvegarde le dernier Shape traité
+				lastShape = shape;
 			}
-
-			// On sauvegarde le dernier Shape traité
-			lastShape = shape;
-
+			
 		}
 
 		LOG.info("TrajetBusDAOImpl::initBDD TrajetBus chargés avec succès");
@@ -248,6 +256,20 @@ public class TrajetBusDAOImpl implements TrajetBusDAO {
 	 */
 	public void setLignesTram(String[] lignesTram) {
 		this.lignesTram = lignesTram;
+	}
+
+	/**
+	 * @return the trajetsOK
+	 */
+	public String[] getTrajetsOK() {
+		return trajetsOK;
+	}
+
+	/**
+	 * @param trajetsOK the trajetsOK to set
+	 */
+	public void setTrajetsOK(String[] trajetsOK) {
+		this.trajetsOK = trajetsOK;
 	}
 
 }

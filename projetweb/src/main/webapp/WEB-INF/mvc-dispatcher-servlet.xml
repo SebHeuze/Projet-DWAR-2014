@@ -65,6 +65,9 @@
 		<property name="lignesTram">
 			<value type="java.lang.String[]">${lignesTram}</value>
 		</property>
+		<property name="trajetsOK">
+			<value type="java.lang.String[]">${trajetsOK}</value>
+		</property>
 	</bean>
 	<bean id="EquipementDAO" class="com.projetweb.dao.impl.EquipementDAOImpl"	scope="singleton">
 	</bean>

@@ -23,6 +23,7 @@ import com.projetweb.bean.Coordonnee;
 import com.projetweb.bean.DistanceGoogleResponse;
 import com.projetweb.bean.Favoris;
 import com.projetweb.bean.ItineraireTanResponse;
+import com.projetweb.bean.Parking;
 import com.projetweb.bean.Stop;
 import com.projetweb.bean.TravelMode;
 import com.projetweb.bean.Waypoint;
@@ -144,8 +145,11 @@ public class AdresseServiceImpl implements AdresseService{
 		
 		//On ajoute le temps d'aller au parking à la date de départ pour le calcul
 		cal.add(Calendar.MINUTE, tempsAller);
-		float coutVoiture = TarifsParkingsHelper.calculerCoutParking(cal.getTime(), dateRetour, adresseArrivee.getCoord());
-		coutVoiture = coutVoiture + UtilsHelper.getPrixCarburant(carburant, (int)(distanceAller+distanceRetour));
+		
+		Parking parking = TarifsParkingsHelper.calculerCoutParking(cal.getTime(), dateRetour, adresseArrivee.getCoord());
+		float coutParking = parking.getCout();
+		
+		float coutVoiture = UtilsHelper.getPrixCarburant(carburant, (int)(distanceAller+distanceRetour));
 		//Initialisation de l'objet réponse
 		BusVsVoiture busVsVoiture = new BusVsVoiture(adresseDepart, adresseArrivee);
 		
@@ -163,6 +167,9 @@ public class AdresseServiceImpl implements AdresseService{
 					Waypoint waypoint = new Waypoint(new Coordonnee(arretStop.getStop_lat(), arretStop.getStop_lon()),arretStop.getStop_name(),"Description", null, TravelMode.MARCHE);
 					listeWaypointsBus.add(waypoint);
 				} else {
+					//C'est l'arrêt d'arrivée
+					Waypoint waypoint = new Waypoint(new Coordonnee(adresseArrivee.getCoord().getLatitude(), adresseArrivee.getCoord().getLongitude()),adresseArrivee.getNom(),"Description", null, TravelMode.MARCHE);
+					listeWaypointsBus.add(waypoint);
 					LOG.log(Level.SEVERE, "AdresseServiceImpl::findItineraire Aucun arrêt correspondant");
 				}
 			} else {
@@ -203,7 +210,7 @@ public class AdresseServiceImpl implements AdresseService{
 		busVsVoiture.getTrajetVoiture().setListeWaypoints(listeWaypointsVoiture);
 		busVsVoiture.getTrajetVoiture().setDistanceAller(distanceAller);
 		busVsVoiture.getTrajetVoiture().setDistanceRetour(distanceRetour);
-		
+		busVsVoiture.getTrajetVoiture().setParking(parking);
 		return busVsVoiture;
 	}
 

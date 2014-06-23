@@ -22,6 +22,10 @@ public class TrajetBus {
 	@Expose
 	@Persistent
 	private boolean complet;
+	
+	@Expose
+	@Persistent
+	private int nbArrets;
 
 	@Expose
 	@Persistent
@@ -117,6 +121,20 @@ public class TrajetBus {
 	 */
 	public void setComplet(boolean complet) {
 		this.complet = complet;
+	}
+
+	/**
+	 * @return the nbArrets
+	 */
+	public int isNbArrets() {
+		return nbArrets;
+	}
+
+	/**
+	 * @param nbArrets the nbArrets to set
+	 */
+	public void setNbArrets(int nbArrets) {
+		this.nbArrets = nbArrets;
 	}
 
 	

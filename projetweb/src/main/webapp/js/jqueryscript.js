@@ -154,7 +154,7 @@ $(document).ready(function(){
 			  	});
 			  	// Prix
 			  	$("#cadre_resultat td:eq(0)").html(data.trajetBus.cout);
-			  	$("#cadre_resultat td:eq(1)").html(data.trajetVoiture.cout);
+			  	$("#cadre_resultat td:eq(1)").html("Carb:"+data.trajetVoiture.cout.toFixed(2)+" Park:"+data.trajetVoiture.parking.cout.toFixed(2));
 			  	
 			  	//Distance
 			  	$("#cadre_resultat td:eq(2)").html(distancebus + "m / " + data.trajetBus.distanceRetour+"m");
@@ -170,7 +170,7 @@ $(document).ready(function(){
   				$( "#cadre_resultat" ).show(800);
   				
   				setDirectionsBus(data.trajetBus.listeWaypoints, data.adresseDepart, data.adresseArrivee);
-  				setDirectionsVoiture(data.trajetVoiture.listeWaypoints, data.adresseDepart, data.adresseArrivee);
+  				setDirectionsVoiture(data.trajetVoiture.listeWaypoints, data.adresseDepart, data.adresseArrivee, data.trajetVoiture.parking);
 			}
 		);
 	}

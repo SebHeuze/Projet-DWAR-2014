@@ -1,7 +1,6 @@
 package com.projetweb.web;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,7 @@ public class MapController {
 	@Autowired
 	private AdresseService adresseService;
 	
-	@RequestMapping(value="/map", method = RequestMethod.GET)
+	@RequestMapping(value="/", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView displayMap(HttpServletRequest req, HttpServletResponse resp) {
 			
 		

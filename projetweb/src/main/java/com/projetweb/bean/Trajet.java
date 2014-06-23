@@ -10,6 +10,11 @@ public class Trajet {
 	private float cout;
 	
 	/**
+	 * le Parking pour la voiture
+	 */
+	private Parking parking;
+	
+	/**
 	 * distance trajet en mètres à l'aller
 	 */
 	private float distanceAller;
@@ -116,6 +121,20 @@ public class Trajet {
 	 */
 	public void setListeWaypoints(List<Waypoint> listeWaypoints) {
 		this.listeWaypoints = listeWaypoints;
+	}
+
+	/**
+	 * @return the parking
+	 */
+	public Parking getParking() {
+		return parking;
+	}
+
+	/**
+	 * @param parking the parking to set
+	 */
+	public void setParking(Parking parking) {
+		this.parking = parking;
 	}
 
 	
