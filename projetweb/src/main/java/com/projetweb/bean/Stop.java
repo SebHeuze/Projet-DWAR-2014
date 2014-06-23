@@ -8,9 +8,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import javax.jdo.annotations.Extension;
 
-import com.google.api.client.util.Key;
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
 @PersistenceCapable
@@ -21,11 +19,17 @@ public class Stop implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1707409217819533702L;
 
+	
 	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
-	private String stop_id;
+    private String encodedKey;
 
+    @Persistent
+    @Extension(vendorName="datanucleus", key="gae.pk-name", value="true")
+    private String stop_id;
+	    
+	    
 	@Expose
 	@Persistent
 	private String stop_name;
@@ -128,6 +132,20 @@ public class Stop implements java.io.Serializable {
 
 	public void setParent_station(String parent_station) {
 		this.parent_station = parent_station;
+	}
+
+	/**
+	 * @return the encodedKey
+	 */
+	public String getEncodedKey() {
+		return encodedKey;
+	}
+
+	/**
+	 * @param encodedKey the encodedKey to set
+	 */
+	public void setEncodedKey(String encodedKey) {
+		this.encodedKey = encodedKey;
 	}
 	
 

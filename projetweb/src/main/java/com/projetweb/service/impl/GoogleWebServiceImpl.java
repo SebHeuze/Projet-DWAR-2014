@@ -13,6 +13,7 @@ import com.projetweb.bean.Adresse;
 import com.projetweb.bean.Coordonnee;
 import com.projetweb.bean.DistanceGoogleResponse;
 import com.projetweb.bean.GeocodeGoogleResponse;
+import com.projetweb.helper.UtilsHelper;
 import com.projetweb.service.GoogleWebService;
 
 public class GoogleWebServiceImpl implements GoogleWebService{
@@ -46,11 +47,15 @@ public class GoogleWebServiceImpl implements GoogleWebService{
 		paramsMap.put("sensor", "false");
 		paramsMap.put("key", "AIzaSyAl23ZQ0tcOTx0FS3fnaaSU6dUYTFNiifo");
 		LOG.info("GoogleWebServiceImpl::findCoordonnees Appel Google avec l'adresse "+adresse);
+		
 		Reader result = getHttpRequest(googleMapsAPIUrl + serviceGeocode,paramsMap);
 
 		LOG.info("GoogleWebServiceImpl::findCoordonnees Transformation JSON");
 		GeocodeGoogleResponse googleResponse = (GeocodeGoogleResponse) gson.fromJson(result, GeocodeGoogleResponse.class);
 		
+		if (googleResponse.getResults().size()==0){
+			LOG.severe("GoogleWebServiceImpl::findCoordonnees Erreur lors de l'appel de l'adresse "+ googleMapsAPIUrl + serviceGeocode);
+		}
 		return googleResponse.getResults().get(0).getGeometry().getLocation();
 	}	
 	@Override
