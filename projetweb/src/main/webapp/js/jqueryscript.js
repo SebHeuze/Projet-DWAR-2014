@@ -35,7 +35,7 @@ $(document).ready(function(){
 	
 	$("#favoris").click(function(){
 		$.post(
-				  "http://localhost:8080/adresse/favoris",
+				  "/adresse/favoris",
 				  { depart: $( "#adresse_depart_id" ).val(),
 					arrivee: $( "#adresse_arrivee_id" ).val() },
 				  function(data){
