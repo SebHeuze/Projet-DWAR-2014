@@ -71,8 +71,6 @@ public class HttpRequestHelper {
 	        
 			if(response.getStatusCode() == 200) {
 				InputStream content = response.getContent();
-				String reponse = UtilsHelper.getStringFromInputStream(content);
-				LOG.info("HttpRequestHelper::getHttpRequest: Réponse " + reponse);
 				//Read the server response and attempt to parse it as JSON
 				reader = new InputStreamReader(content,"UTF-8");
 				
