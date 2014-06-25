@@ -1,24 +1,27 @@
-App Engine Java Guestbook
-Copyright (C) 2010-2012 Google Inc.
+App Engine Naoned Go
 
-## Sample guestbook for use with App Engine Java.
+## Lancement de l'application
 
 Requires [Apache Maven](http://maven.apache.org) 3.0 or greater, and JDK 6+ in order to run.
 
-To build, run
+mvn clean install
 
-    mvn package
+and 
 
-Building will run the tests, but to explicitly run tests you can use the test target
+mvn appengine:devserver
 
-    mvn test
+## Utilisation de l'application
 
-To start the app, use the [App Engine Maven Plugin](http://code.google.com/p/appengine-maven-plugin/) that is already included in this demo.  Just run the command.
+Entrez les informations demandées sur le premier écran (Possibilité de se loguer via Google en bas à droite), si la disposition des fenêtres dérange il est possible de les déplacer.
 
-    mvn appengine:devserver
+Si l'adresse de départ tapée renvoi plusieurs adresses lors de l'appel tan l'application vous propose un choix (Privilégier nantes comme aucun trajet Tan n'est disponible en dehors)
 
-For further information, consult the [Java App Engine](https://developers.google.com/appengine/docs/java/overview) documentation.
+Si l'adresse d'arrivée tapée renvoi plusieurs adresses lors de l'appel tan l'application vous propose un choix (Privilégier nantes comme aucun trajet Tan n'est disponible en dehors)
 
-To see all the available goals for the App Engine plugin, run
+Le résultat devrait ensuite s'afficher.
 
-    mvn help:describe -Dplugin=appengine
+
+## Favoris
+Il est nécessaire de se connecter à l'application pour accéder aux favoris, les favoris sont disponibles uniquement sur l'écran d'accueil et permettent de lancer une recherche avec les adresses Exactes (sans propositions d'adresses).
+Veuillez changer les dates d'aller et de retour avant de cliquer sur le favoris (qui a pour effet de lancer la recherche)
+
