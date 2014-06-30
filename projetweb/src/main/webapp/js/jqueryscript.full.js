@@ -62,7 +62,8 @@ $(document).ready(function(){
 		$("#all_favoris").hide(800);
 		$.post(
 		  "/adresse/find",
-		  { adresse: $( "#adresse_depart" ).val()},
+		  { adresse: $( "#adresse_depart" ).val()})
+		  .success(
 		  function(data){
 		  			 if(data.length>1){
 		  			 	$("#adresses_depart").append("<ul>");
@@ -88,7 +89,7 @@ $(document).ready(function(){
 		  			 	getAdresseArrivee();
 		  			 }
 				  }
-		);
+		).fail(function(xhr, textStatus, errorThrown) { alert("Une erreur est survenue à cause d'un défaut dans les données de la Tan"); });
 	}
 	function clearOverlays() {
 	  for (var i = 0; i < listeMarkers.length; i++ ) {
@@ -101,7 +102,8 @@ $(document).ready(function(){
 	function getAdresseArrivee() {
      	$.post(
 		  "/adresse/find",
-		  { adresse: $( "#adresse_arrivee" ).val()},
+		  { adresse: $( "#adresse_arrivee" ).val()})
+		  .success(
 		  function(data){
 		  			 if(data.length>1){
 		  			 	$("#adresses_arrivee").append("<ul>")
@@ -128,7 +130,7 @@ $(document).ready(function(){
 		  			 	getItineraire();
 		  			 }	
 				  }
-		);
+		).fail(function(xhr, textStatus, errorThrown) { alert("Une erreur est survenue à cause d'un défaut dans les données de la Tan"); });
 	}
 
 	function getItineraire() {
@@ -140,8 +142,8 @@ $(document).ready(function(){
 			dateRetour:$( "#date_retour" ).val(),
 			carburant:$( "#carburant" ).val(),
 			abonnementTan:$( "input[name='abonnement_tan']:checked" ).val()
-		  },
-		  function(data){
+		  })
+		  .success(function(data){
 			  	var distancebus = 0;
 			  	var lastLat = null;
 			  	var lastLong = null;
@@ -172,7 +174,8 @@ $(document).ready(function(){
   				setDirectionsBus(data.trajetBus.listeWaypoints, data.adresseDepart, data.adresseArrivee);
   				setDirectionsVoiture(data.trajetVoiture.listeWaypoints, data.adresseDepart, data.adresseArrivee, data.trajetVoiture.parking);
 			}
-		);
+		)
+		.fail(function(xhr, textStatus, errorThrown) { alert("Une erreur est survenue à cause d'un défaut dans les données de la Tan"); });
 	}
 	
 	function calculateDistance(lat1, lon1, lat2, lon2) {
