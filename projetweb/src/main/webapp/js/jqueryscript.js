@@ -5,8 +5,8 @@ $(document).ready(function(){
 	//Données préremplies
 	$("#adresse_depart").val("rue du gros chene");
 	$("#adresse_arrivee").val("Mail Pablo Picasso");
-	$( "#date_depart" ).val("16/06/2014 16:00");
-	$( "#date_retour" ).val("16/06/2014 18:00");
+	$( "#date_depart" ).val("01/07/2014 16:00");
+	$( "#date_retour" ).val("01/07/2014 18:00");
 
 	$( "#all_favoris" ).draggable();
 	$( "#cadre" ).draggable({drag:drag_cadre});
