@@ -3873,7 +3873,7 @@
   },
   {
     "stop_id":"StopArea:FMIT",
-    "stop_name":"François Mitterrand",
+    "stop_name":"François Mitterand",
     "stop_desc":"",
     "stop_lat":47.22209789,
     "stop_lon":-1.63821393,
@@ -4564,9 +4564,9 @@
     "location_type":"1",
     "parent_station":""
   },
-  {
+    {
     "stop_id":"StopArea:GPRO",
-    "stop_name":"Gare de Pont-Rousseau",
+    "stop_name":"Gare de Rezé-Pont-Rousseau",
     "stop_desc":"",
     "stop_lat":47.19299444,
     "stop_lon":-1.54905075,
