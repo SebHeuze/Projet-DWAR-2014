@@ -155,11 +155,11 @@ $(document).ready(function(){
 			  		lastLong = entry.longitude;
 			  	});
 			  	// Prix
-			  	$("#cadre_resultat td:eq(0)").html(data.trajetBus.cout);
-			  	$("#cadre_resultat td:eq(1)").html("Carb:"+data.trajetVoiture.cout.toFixed(2)+" Park:"+data.trajetVoiture.parking.cout.toFixed(2));
+			  	$("#cadre_resultat td:eq(0)").html(data.trajetBus.cout + "€");
+			  	$("#cadre_resultat td:eq(1)").html("Carb:"+data.trajetVoiture.cout.toFixed(2) + "€ Park:"+data.trajetVoiture.parking.cout.toFixed(2) + "€");
 			  	
 			  	//Distance
-			  	$("#cadre_resultat td:eq(2)").html(distancebus + "m / " + data.trajetBus.distanceRetour+"m");
+			  	$("#cadre_resultat td:eq(2)").html(distancebus + "m / " + distancebus+"m");
 			  	$("#cadre_resultat td:eq(3)").html(data.trajetVoiture.distanceAller + "m / " + data.trajetVoiture.distanceRetour+"m");
 			  	
 			  	//Temps

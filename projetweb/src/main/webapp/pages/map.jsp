@@ -134,6 +134,9 @@
               <div id="favoris">
 				${ajouter_favoris}
               </div>
+              <div id="info" style=" text-align: center;">
+             	Comparaison Aller/retour      
+  			  </div>
               <table>
                 <tr>
                   <th class="bus">Bus</th>
