@@ -51,12 +51,10 @@ function createTanMarker(map, latlng_depart,latlng_arrivee, ligne) {
 	        position: latlng,
 	        map: map,
 	        icon: new google.maps.MarkerImage("/images/"+ ligne +".gif",
-	        		// This marker is 20 pixels wide by 34 pixels tall.
-				    new google.maps.Size(14, 14),
-				    // The origin for this image is 0,0.
-				    new google.maps.Point(0,0),
-				    // The anchor for this image is at 6,20.
-				    new google.maps.Point(7, 7)
+	        		null, /* size is determined at runtime */
+	        	    null, /* origin is 0,0 */
+	        	    null, /* anchor is bottom center of the scaled image */
+	        	    new google.maps.Size(14, 14)
 					),
 	        title: "Ligne",
 	        });
