@@ -46,7 +46,7 @@ function createMarker(map, latlng, label, html, color) {
 
 function createTanMarker(map, latlng_depart,latlng_arrivee, ligne) {
 	
-		latlng = new google.maps.LatLng((latlng_arrivee.k-latlng_depart.k)/2 + latlng_depart.k, (latlng_arrivee.A-latlng_depart.A)/2 + latlng_depart.A);
+		latlng = new google.maps.LatLng((latlng_arrivee.k-latlng_depart.k)/2 + latlng_depart.k, (latlng_arrivee.B-latlng_depart.B)/2 + latlng_depart.B);
 	    var marker = new google.maps.Marker({
 	        position: latlng,
 	        map: map,
