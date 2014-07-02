@@ -52,7 +52,7 @@ function createTanMarker(map, latlng_depart,latlng_arrivee, ligne) {
 	        map: map,
 	        icon: new google.maps.MarkerImage("/images/"+ ligne +".gif",
 	        		null, /* size is determined at runtime */
-	        	    null, /* origin is 0,0 */
+	        	    null, /* origin is 0,0  */
 	        	    null, /* anchor is bottom center of the scaled image */
 	        	    new google.maps.Size(14, 14)
 					),
