@@ -45,15 +45,19 @@ function createMarker(map, latlng, label, html, color) {
 
 
 function createTanMarker(map, latlng_depart,latlng_arrivee, ligne) {
+	
 		latlng = new google.maps.LatLng((latlng_arrivee.k-latlng_depart.k)/2 + latlng_depart.k, (latlng_arrivee.A-latlng_depart.A)/2 + latlng_depart.A);
 	    var marker = new google.maps.Marker({
 	        position: latlng,
 	        map: map,
 	        icon: new google.maps.MarkerImage("/images/"+ ligne +".gif",
-	        		null, /* size is determined at runtime */
-	        	    null, /* origin is 0,0 */
-	        	    null, /* anchor is bottom center of the scaled image */
-	        	    new google.maps.Size(14, 14)),
+	        		// This marker is 20 pixels wide by 34 pixels tall.
+				    new google.maps.Size(14, 14),
+				    // The origin for this image is 0,0.
+				    new google.maps.Point(0,0),
+				    // The anchor for this image is at 6,20.
+				    new google.maps.Point(7, 7)
+					),
 	        title: "Ligne",
 	        });
 
@@ -240,7 +244,9 @@ function setDirectionsBus(coordsBus, adresseDepart, adresseArrivee){ //récursif
 					  var markerletter = "A".charCodeAt(0);
 					  markerletter += i;
                       markerletter = String.fromCharCode(markerletter);
-                      createTanMarker(directionsDisplay1.getMap(),legs[i].start_location, legs[i].end_location,wayptsbuslignes[i+1]);
+					  if(wayptsbuslignes[i+1]!=null){
+						createTanMarker(directionsDisplay1.getMap(),legs[i].start_location, legs[i].end_location,wayptsbuslignes[i+1]);
+					  }
                       createMarker(directionsDisplay1.getMap(),legs[i].start_location,"marker"+i,"some text for marker "+i+"<br>"+legs[i].start_address,markerletter);
                     }
                     var i=legs.length;
